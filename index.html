@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RentShield BG — Real Estate Scam Verification Bulgaria</title>
+<meta name="description" content="Bulgaria's #1 community-verified database of rental scams. Search any phone or email for free. Get unlimited access with a €10 subscription." />
+
+<!-- Tailwind (CDN) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts: Syne (display) + Geist Mono (mono) + Manrope (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#05080a;
+  --bg-2:#0a0f12;
+  --emb:#34d399;
+  --eg:#10b981;
+  --ed:#059669;
+  --line:rgba(255,255,255,.06);
+  --line-strong:rgba(52,211,153,.22);
+  --txt:#e5e7eb;
+  --mute:#94a3b8;
+}
+
+*{ -webkit-font-smoothing:antialiased; }
+html,body{ background:var(--bg); color:var(--txt); font-family:'Manrope',ui-sans-serif,system-ui,sans-serif; }
+body{ overflow-x:hidden; }
+
+::selection{ background:rgba(52,211,153,.35); color:#fff; }
+
+/* Mesh + grid background */
+.bg-mesh{
+  position:fixed; inset:-20%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(16,185,129,.20), transparent 45%),
+    radial-gradient(circle at 82% 22%, rgba(20,184,166,.13), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(5,150,105,.16), transparent 50%);
+  filter:blur(60px); animation:meshMove 22s ease-in-out infinite alternate;
+}
+@keyframes meshMove{
+  0%{ transform:translate(0,0) scale(1); }
+  100%{ transform:translate(-2%, 3%) scale(1.05); }
+}
+.bg-grid{
+  position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:radial-gradient(circle at center,#000 30%,transparent 75%);
+}
+.grain{
+  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.06; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Glass */
+.glass{
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));
+  border:1px solid var(--line);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+}
+.glass-h{ transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease; }
+.glass-h:hover{ transform:translateY(-3px); border-color:var(--line-strong); box-shadow:0 18px 60px -20px rgba(16,185,129,.18); }
+
+/* Typography helpers */
+.font-syne{ font-family:'Syne',sans-serif; letter-spacing:-.01em; }
+.font-mono2{ font-family:'Geist Mono',ui-monospace,monospace; }
+
+/* Buttons */
+.btn-p{
+  background:linear-gradient(135deg,#10b981,#059669);
+  position:relative; overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+  box-shadow:0 8px 24px -8px rgba(16,185,129,.4), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.btn-p:hover{ transform:translateY(-1px); box-shadow:0 14px 36px -10px rgba(16,185,129,.55), inset 0 1px 0 rgba(255,255,255,.25); }
+.btn-p::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:translateX(-120%); transition:transform .7s ease;
+}
+.btn-p:hover::after{ transform:translateX(120%); }
+
+.btn-g{
+  background:rgba(255,255,255,.03); border:1px solid var(--line);
+  transition:all .25s ease;
+}
+.btn-g:hover{ background:rgba(255,255,255,.06); border-color:var(--line-strong); color:#fff; }
+
+.btn-ghost{
+  background:transparent; border:1px solid var(--line);
+  transition:all .25s ease;
+}
+.btn-ghost:hover{ border-color:var(--line-strong); background:rgba(52,211,153,.06); }
+
+/* Inputs */
+.fi, .sf, .si, .cc-select{
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+  color:#e5e7eb;
+  outline:none; transition:border-color .2s, background .2s, box-shadow .2s;
+  border-radius:12px;
+}
+.fi:focus, .sf:focus, .si:focus, .cc-select:focus{
+  border-color:var(--emb); background:rgba(16,185,129,.05);
+  box-shadow:0 0 0 4px rgba(16,185,129,.12);
+}
+.sf{ width:100%; padding:.85rem 1rem; font-size:.875rem; }
+
+/* Search bar */
+.search-with-cc{ position:relative; display:flex; }
+.cc-select{
+  border-radius:12px 0 0 12px;
+  padding:.85rem .75rem;
+  font-size:.85rem;
+  border-right:1px solid var(--line);
+  min-width:110px;
+  appearance:none;
+  background:rgba(255,255,255,.04) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right .55rem center;
+  padding-right:1.6rem;
+}
+.si{ background:rgba(255,255,255,.025); }
+
+/* Badges */
+.vbadge{
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:10px;
+  padding:3px 9px; border-radius:6px; letter-spacing:.04em;
+  background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(5,150,105,.12));
+  color:#34d399; border:1px solid rgba(52,211,153,.32);
+}
+.bdg.bf{
+  background:linear-gradient(135deg,rgba(248,113,113,.16),rgba(220,38,38,.1));
+  color:#f87171; border:1px solid rgba(248,113,113,.32);
+  font-family:'Syne',sans-serif; font-weight:700; letter-spacing:.04em; border-radius:6px;
+}
+
+/* Pulse for live indicators */
+.pulse-dot{
+  width:8px; height:8px; border-radius:50%; background:#34d399;
+  box-shadow:0 0 0 0 rgba(52,211,153,.6); animation:pulse 2.2s infinite;
+}
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(52,211,153,.6); }
+  70%{ box-shadow:0 0 0 12px rgba(52,211,153,0); }
+  100%{ box-shadow:0 0 0 0 rgba(52,211,153,0); }
+}
+
+/* Tabs */
+.tab-btn{
+  padding:.55rem 1rem; border-radius:10px; font-size:.78rem; font-weight:600;
+  color:#94a3b8; background:rgba(255,255,255,.02);
+  border:1px solid var(--line); transition:all .2s ease; cursor:pointer;
+}
+.tab-btn:hover{ color:#e5e7eb; border-color:var(--line-strong); }
+.tab-btn.active{ color:#fff; background:rgba(16,185,129,.12); border-color:rgba(52,211,153,.4); }
+
+/* Cards */
+.bcard{ position:relative; overflow:hidden; }
+.bcard::before{
+  content:""; position:absolute; top:-50%; right:-50%; width:160px; height:160px;
+  background:radial-gradient(circle, rgba(16,185,129,.12), transparent 70%);
+  opacity:0; transition:opacity .35s ease;
+}
+.bcard:hover::before{ opacity:1; }
+.bcard.bad::before{ background:radial-gradient(circle, rgba(248,113,113,.12), transparent 70%); }
+
+/* Scroll-in animations */
+.fi1,.fi2,.fi3,.fi4,.fi5{ opacity:0; transform:translateY(20px); animation:fadeUp .9s ease forwards; }
+.fi2{ animation-delay:.12s; }
+.fi3{ animation-delay:.22s; }
+.fi4{ animation-delay:.32s; }
+.fi5{ animation-delay:.42s; }
+@keyframes fadeUp{ to{ opacity:1; transform:none; } }
+
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in{ opacity:1; transform:none; }
+
+/* Hero glow */
+.hero-glow{
+  position:absolute; top:-10%; left:50%; transform:translateX(-50%);
+  width:1200px; height:600px; pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(16,185,129,.16), transparent 60%);
+  filter:blur(40px); z-index:0;
+}
+
+/* Stats cards */
+.scard{ transition:transform .3s ease, border-color .3s ease; }
+.scard:hover{ transform:translateY(-2px); border-color:var(--line-strong); }
+
+/* TOS modal content */
+.tos-content h3{ font-family:'Syne',sans-serif; color:#fff; font-weight:700; margin-top:1rem; margin-bottom:.5rem; font-size:.95rem; }
+.tos-content p{ font-size:.85rem; color:#94a3b8; line-height:1.6; margin-bottom:.6rem; }
+.tos-content a{ color:#34d399; }
+
+/* Modal */
+.mo{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(14px); z-index:100; padding:1rem; }
+.mo.show{ display:flex; align-items:center; justify-content:center; animation:fadeIn .25s ease; }
+@keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+.mb{ animation:popIn .35s cubic-bezier(.2,.8,.2,1); }
+@keyframes popIn{ from{ transform:scale(.94); opacity:0; } to{ transform:scale(1); opacity:1; } }
+
+/* Toast */
+.toast{ position:fixed; bottom:1.5rem; right:1.5rem; z-index:200; transform:translateY(140%); transition:transform .4s ease; }
+.toast.show{ transform:translateY(0); }
+
+/* Navbar */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  background:rgba(5,8,10,.7); backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+
+/* Pricing card highlight */
+.price-pop{
+  position:relative;
+  background:linear-gradient(180deg,rgba(16,185,129,.06),rgba(255,255,255,.01));
+  border:1px solid rgba(52,211,153,.32);
+  box-shadow:0 30px 80px -30px rgba(16,185,129,.4);
+}
+.price-pop::before{
+  content:""; position:absolute; inset:-1px; border-radius:1.5rem; padding:1px;
+  background:linear-gradient(135deg,rgba(52,211,153,.5),rgba(255,255,255,0));
+  -webkit-mask:linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+}
+
+/* Ticker */
+.ticker{ display:flex; overflow:hidden; gap:3rem; mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+.ticker-track{ display:flex; gap:3rem; animation:tick 38s linear infinite; white-space:nowrap; }
+@keyframes tick{ to{ transform:translateX(-50%); } }
+
+/* Lock blur for free vs subscribed */
+.locked{ position:relative; }
+.locked .blur-content{ filter:blur(6px); user-select:none; pointer-events:none; }
+.lock-overlay{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:.5rem; background:rgba(5,8,10,.4); border-radius:inherit;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(52,211,153,.18); border-radius:10px; }
+::-webkit-scrollbar-thumb:hover{ background:rgba(52,211,153,.32); }
+
+/* Smooth scroll */
+html{ scroll-behavior:smooth; }
+
+/* Section heading kicker */
+.kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.18em;
+  color:#34d399;
+}
+.kicker::before{ content:""; width:24px; height:1px; background:#34d399; }
+
+/* Marquee logos */
+.logo-pill{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.5rem .9rem; border-radius:999px;
+  background:rgba(255,255,255,.025); border:1px solid var(--line);
+  font-family:'Syne',sans-serif; font-weight:700; color:#cbd5e1; font-size:.8rem;
+}
+</style>
+</head>
+<body data-testid="rentshield-body">
+
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+<div class="grain"></div>
+
+<!-- NAVBAR -->
+<nav class="nav" data-testid="nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5" data-testid="nav-logo">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#10b981,#059669)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="leading-tight">
+        <div class="font-syne font-bold text-white text-sm">RentShield <span class="text-emerald-400">BG</span></div>
+        <div class="text-[10px] text-slate-500 -mt-0.5 tracking-widest uppercase">Trust Layer · 2026</div>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-1">
+      <a href="#search" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-testid="nav-search">Search</a>
+      <a href="#directory" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-testid="nav-directory">Directory</a>
+      <a href="#pricing" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-testid="nav-pricing">Pricing</a>
+      <a href="#report-section" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-testid="nav-report">Report</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="hidden sm:flex items-center gap-1 px-1 py-1 rounded-lg glass" data-testid="lang-switch">
+        <button id="lang-en" class="px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-500/15 text-emerald-300" data-testid="lang-en">EN</button>
+        <button id="lang-bg" class="px-2.5 py-1 text-[11px] font-semibold rounded-md text-slate-400 hover:text-white" data-testid="lang-bg">BG</button>
+      </div>
+      <button onclick="openModal('pricing-jump')" class="btn-p px-4 py-2 rounded-lg text-white text-xs font-semibold" data-testid="nav-cta">Get Access</button>
+    </div>
+  </div>
+</nav>
+
+<div id="top"></div>
+
+<!-- HERO -->
+<section class="relative pt-36 pb-20 px-4 sm:px-8 text-center overflow-hidden">
+  <div class="hero-glow"></div>
+  <div class="relative z-10 max-w-4xl mx-auto">
+
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-7 fi1" style="border-color:rgba(52,211,153,.25)" data-testid="hero-eyebrow-wrap">
+      <span class="pulse-dot"></span>
+      <span class="text-xs font-medium text-emerald-300 tracking-wide" data-t="hero-eyebrow">Bulgaria's #1 Real Estate Scam Database</span>
+    </div>
+
+    <h1 class="font-syne font-extrabold text-5xl sm:text-7xl leading-[0.95] tracking-tight mb-6 fi2" data-testid="hero-title">
+      <span data-t="hero-h1a">Verify Before</span><br />
+      <span class="text-transparent bg-clip-text" style="background-image:linear-gradient(135deg,#a7f3d0,#34d399 35%,#10b981 70%,#059669)" data-t="hero-h1b">You Sign or Pay.</span>
+    </h1>
+
+    <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 font-light fi3" data-t="hero-sub" data-testid="hero-sub">
+      Search any phone or email <span class="text-emerald-400 font-semibold">for free</span>. Instantly see if a broker or landlord has been reported for fake listings, stolen deposits, or rental fraud across Bulgaria.
+    </p>
+
+    <!-- SEARCH BAR -->
+    <div id="search" class="max-w-2xl mx-auto fi4" data-testid="search-block">
+      <div class="flex gap-2 p-2 rounded-2xl glass" style="border-color:rgba(52,211,153,.22)">
+        <div class="flex-1 search-with-cc">
+          <select id="countryCode" class="cc-select" data-testid="country-code">
+            <option value="+359">🇧🇬 +359</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+31">🇳🇱 +31</option>
+            <option value="+43">🇦🇹 +43</option>
+            <option value="+41">🇨🇭 +41</option>
+            <option value="+48">🇵🇱 +48</option>
+            <option value="+40">🇷🇴 +40</option>
+            <option value="+30">🇬🇷 +30</option>
+            <option value="+90">🇹🇷 +90</option>
+            <option value="+420">🇨🇿 +420</option>
+            <option value="+421">🇸🇰 +421</option>
+            <option value="+385">🇭🇷 +385</option>
+            <option value="+381">🇷🇸 +381</option>
+            <option value="+36">🇭🇺 +36</option>
+          </select>
+          <input id="searchInput" type="text" class="si w-full pl-4 pr-4 py-3.5 text-sm font-mono2"
+                 style="border-radius:0 12px 12px 0"
+                 data-placeholder-en="Phone number or email address..."
+                 data-placeholder-bg="Телефон или имейл адрес..."
+                 placeholder="Phone number or email address..."
+                 data-testid="search-input" />
+        </div>
+        <button onclick="runSearch()" class="btn-p px-6 py-3.5 rounded-xl text-white text-sm font-semibold whitespace-nowrap" data-t="search-btn" data-testid="search-btn">Search</button>
+      </div>
+      <p class="text-xs text-slate-500 mt-3" data-t="search-hint" data-testid="search-hint">
+        100% free search — full evidence, screenshots & history included. No paywall.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 mt-5">
+      <span class="text-xs text-slate-500 self-center" data-t="try-label">Try:</span>
+      <button onclick="quickSearch('+359888123456')" class="btn-g px-3 py-1.5 rounded-lg text-xs text-slate-300 font-mono2" data-testid="try-1">+359888123456</button>
+      <button onclick="quickSearch('ivan.petrov.rental@gmail.com')" class="btn-g px-3 py-1.5 rounded-lg text-xs text-slate-300 font-mono2" data-testid="try-2">ivan.petrov.rental@gmail.com</button>
+      <button onclick="quickSearch('+359777999888')" class="btn-g px-3 py-1.5 rounded-lg text-xs text-slate-300 font-mono2" data-testid="try-3">+359777999888</button>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="relative z-10 mb-12 py-3 border-y" style="border-color:var(--line); background:rgba(255,255,255,.015)" data-testid="ticker">
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="logo-pill"><span class="pulse-dot"></span>1,247 reports filed</span>
+      <span class="logo-pill">€218K fraud prevented</span>
+      <span class="logo-pill">47 verified brokers</span>
+      <span class="logo-pill">384 flagged scammers</span>
+      <span class="logo-pill">Sofia · Varna · Plovdiv · Burgas</span>
+      <span class="logo-pill">GDPR-compliant · EU-hosted</span>
+      <span class="logo-pill"><span class="pulse-dot"></span>1,247 reports filed</span>
+      <span class="logo-pill">€218K fraud prevented</span>
+      <span class="logo-pill">47 verified brokers</span>
+      <span class="logo-pill">384 flagged scammers</span>
+      <span class="logo-pill">Sofia · Varna · Plovdiv · Burgas</span>
+      <span class="logo-pill">GDPR-compliant · EU-hosted</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-8 mb-20 reveal">
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" data-testid="stats">
+    <div class="scard glass rounded-2xl p-5 text-center"><div class="font-syne text-2xl font-bold text-emerald-400 mb-1" data-counter="1247">0</div><div class="text-xs text-slate-500" data-t="stat1">Reports Filed</div></div>
+    <div class="scard glass rounded-2xl p-5 text-center"><div class="font-syne text-2xl font-bold text-emerald-400 mb-1" data-counter="384">0</div><div class="text-xs text-slate-500" data-t="stat2">Verified Scammers</div></div>
+    <div class="scard glass rounded-2xl p-5 text-center"><div class="font-syne text-2xl font-bold text-emerald-400 mb-1">€218K</div><div class="text-xs text-slate-500" data-t="stat3">Fraud Prevented</div></div>
+    <div class="scard glass rounded-2xl p-5 text-center"><div class="font-syne text-2xl font-bold text-emerald-400 mb-1" data-counter="47">0</div><div class="text-xs text-slate-500" data-t="stat4">Verified Brokers</div></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results-section" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 mb-16" style="display:none">
+  <h2 class="font-syne font-bold text-lg mb-5 text-slate-300" id="results-title" data-testid="results-title"></h2>
+  <div class="grid lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2" id="results-container" data-testid="results-container"></div>
+    <div id="broker-sidebar" class="space-y-4" data-testid="broker-sidebar"></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="text-center mb-14">
+    <p class="kicker mb-3" data-t="hiw-eyebrow">How It Works</p>
+    <h2 class="font-syne font-extrabold text-4xl sm:text-5xl text-white" data-t="hiw-title">Simple. Fast. Trusted.</h2>
+    <p class="text-sm text-slate-500 mt-4 max-w-xl mx-auto" data-t="hiw-sub">Free for everyone. Optional subscription for power users who want more.</p>
+  </div>
+  <div class="grid sm:grid-cols-3 gap-6">
+    <div class="glass rounded-2xl p-7 relative overflow-hidden glass-h" data-testid="hiw-step-1">
+      <div class="text-5xl font-syne font-extrabold text-emerald-900/60 absolute top-4 right-6 select-none">01</div>
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+      <h3 class="font-syne font-bold text-white mb-2 text-base" data-t="step1-title">Search Free</h3>
+      <p class="text-sm text-slate-400 leading-relaxed" data-t="step1-desc">Enter any phone number or email. Instantly see full reports — no paywall, no signup needed.</p>
+    </div>
+    <div class="glass rounded-2xl p-7 relative overflow-hidden glass-h" data-testid="hiw-step-2">
+      <div class="text-5xl font-syne font-extrabold text-emerald-900/60 absolute top-4 right-6 select-none">02</div>
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3 class="font-syne font-bold text-white mb-2 text-base" data-t="step2-title">Report &amp; Protect</h3>
+      <p class="text-sm text-slate-400 leading-relaxed" data-t="step2-desc">Got scammed? File an anonymous report. Moderators verify within 48h and protect future tenants.</p>
+    </div>
+    <div class="glass rounded-2xl p-7 relative overflow-hidden glass-h" data-testid="hiw-step-3">
+      <div class="text-5xl font-syne font-extrabold text-emerald-900/60 absolute top-4 right-6 select-none">03</div>
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h3 class="font-syne font-bold text-white mb-2 text-base" data-t="step3-title">Go Pro (Optional)</h3>
+      <p class="text-sm text-slate-400 leading-relaxed" data-t="step3-desc">Upgrade for unlimited bulk checks, watchlist alerts, history & exports — or get verified as a broker.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 mb-28 reveal">
+  <div class="text-center mb-14">
+    <p class="kicker mb-3" data-t="pricing-eyebrow">Pricing</p>
+    <h2 class="font-syne font-extrabold text-4xl sm:text-5xl text-white mb-4" data-t="pricing-title">Free Forever. Pro When You Need More.</h2>
+    <p class="text-sm text-slate-400 max-w-xl mx-auto" data-t="pricing-sub">Three tiers. Zero hidden fees. Cancel anytime.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- FREE -->
+    <div class="glass rounded-3xl p-7 glass-h" data-testid="tier-free">
+      <div class="mb-1 text-xs font-semibold text-slate-500 uppercase tracking-widest" data-t="tier-free-label">Free</div>
+      <div class="flex items-baseline gap-1 mb-1">
+        <span class="font-syne text-5xl font-extrabold text-white">€0</span>
+        <span class="text-sm text-slate-500" data-t="forever">forever</span>
+      </div>
+      <p class="text-sm text-slate-400 mb-6" data-t="tier-free-sub">For everyone protecting themselves from rental scams.</p>
+      <ul class="space-y-2.5 mb-7 text-sm">
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="free-f1">Unlimited free searches by phone or email</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="free-f2">Full report details — no paywall</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="free-f3">Browse the verified broker directory</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="free-f4">Submit anonymous scam reports</span></li>
+      </ul>
+      <a href="#search" class="block w-full text-center py-3 rounded-xl btn-ghost text-sm font-semibold text-emerald-300" data-t="free-cta" data-testid="tier-free-cta">Start Searching</a>
+    </div>
+
+    <!-- VISITOR PRO (€10) -->
+    <div class="price-pop rounded-3xl p-7" data-testid="tier-visitor">
+      <div class="flex items-center justify-between mb-1">
+        <div class="text-xs font-semibold text-emerald-400 uppercase tracking-widest" data-t="tier-visitor-label">Pro · Visitor</div>
+        <span class="text-[10px] font-bold px-2 py-1 rounded-md" style="background:rgba(52,211,153,.18);color:#34d399;border:1px solid rgba(52,211,153,.35)" data-t="popular">MOST POPULAR</span>
+      </div>
+      <div class="flex items-baseline gap-1 mb-1">
+        <span class="font-syne text-5xl font-extrabold text-white">€10</span>
+        <span class="text-sm text-slate-400" data-t="per-month">/month</span>
+      </div>
+      <p class="text-sm text-slate-400 mb-6" data-t="tier-visitor-sub">For renters, expats &amp; serious apartment hunters.</p>
+      <ul class="space-y-2.5 mb-7 text-sm">
+        <li class="flex items-start gap-2 text-slate-200 font-medium"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f0">Everything in Free, plus:</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f1"><b class="text-white">Watchlist alerts</b> — get notified the moment a phone/email gets flagged</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f2"><b class="text-white">Bulk verification</b> — paste a CSV / list of contacts, get a risk report</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f3"><b class="text-white">Search history</b> — every check saved, with PDF export</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f4"><b class="text-white">New scam feed</b> — weekly digest of newly flagged scammers in your city</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f5"><b class="text-white">Trust Score™</b> — proprietary risk rating for any contact</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="vis-f6"><b class="text-white">Browser extension</b> — auto-check listings on OLX, imot.bg &amp; Facebook</span></li>
+      </ul>
+      <!-- STRIPE PAYMENT LINK FOR VISITOR (€10/mo). Replace href with your Stripe Payment Link. -->
+      <a href="https://buy.stripe.com/REPLACE_WITH_VISITOR_LINK"
+         target="_blank" rel="noopener"
+         class="block w-full text-center py-3.5 rounded-xl btn-p text-white text-sm font-semibold"
+         data-t="vis-cta" data-testid="tier-visitor-cta">Subscribe — €10 / month</a>
+      <p class="text-[11px] text-slate-500 text-center mt-3" data-t="cancel-anytime">Secured by Stripe · Cancel anytime</p>
+    </div>
+
+    <!-- BROKER (€20) -->
+    <div class="glass rounded-3xl p-7 glass-h" data-testid="tier-broker">
+      <div class="mb-1 text-xs font-semibold text-slate-500 uppercase tracking-widest" data-t="tier-broker-label">Pro · Broker / Agency</div>
+      <div class="flex items-baseline gap-1 mb-1">
+        <span class="font-syne text-5xl font-extrabold text-white">€20</span>
+        <span class="text-sm text-slate-400" data-t="per-month-2">/month</span>
+      </div>
+      <p class="text-sm text-slate-400 mb-6" data-t="tier-broker-sub">For brokers &amp; agencies who want to be trusted on day one.</p>
+      <ul class="space-y-2.5 mb-7 text-sm">
+        <li class="flex items-start gap-2 text-slate-200 font-medium"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f0">Everything in Visitor Pro, plus:</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f1"><b class="text-white">Green Verified badge</b> on your public profile</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f2"><b class="text-white">Featured</b> in the Verified Broker Directory</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f3"><b class="text-white">Sidebar placement</b> on search results in your city</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f4"><b class="text-white">Custom profile page</b> — bio, license, listings, contact</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f5"><b class="text-white">Monthly verification</b> renewal &amp; clean-history check</span></li>
+        <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-t="br-f6"><b class="text-white">"Trusted by RentShield"</b> embed badge for your own website</span></li>
+      </ul>
+      <!-- STRIPE PAYMENT LINK FOR BROKER (€20/mo). Replace href with your Stripe Payment Link. -->
+      <a href="https://buy.stripe.com/REPLACE_WITH_BROKER_LINK"
+         target="_blank" rel="noopener"
+         class="block w-full text-center py-3.5 rounded-xl btn-p text-white text-sm font-semibold"
+         data-t="br-cta" data-testid="tier-broker-cta">Get Verified — €20 / month</a>
+      <p class="text-[11px] text-slate-500 text-center mt-3" data-t="approval-48h">48h approval · Cancel anytime</p>
+    </div>
+
+  </div>
+
+  <p class="text-center text-xs text-slate-500 mt-10" data-t="pricing-foot">All payments processed by Stripe. EU VAT included where applicable. <a href="#" onclick="openModal('tos-modal');return false" class="text-emerald-400 hover:underline">Terms apply</a>.</p>
+</section>
+
+<!-- BROKER DIRECTORY -->
+<section id="directory" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="text-center mb-10">
+    <p class="kicker mb-3" data-t="dir-eyebrow">Broker Directory</p>
+    <h2 class="font-syne font-extrabold text-4xl sm:text-5xl text-white mb-3" data-t="dir-title">Verified &amp; Flagged Brokers</h2>
+    <p class="text-sm text-slate-400 max-w-xl mx-auto" data-t="dir-sub">Community-verified data. Green = verified safe. Red = community-flagged. Real agencies, real data.</p>
+  </div>
+  <div class="flex gap-2 mb-8 justify-center flex-wrap" data-testid="dir-tabs">
+    <button class="tab-btn active" data-filter="all" data-t="tab-all" data-testid="tab-all">All</button>
+    <button class="tab-btn" data-filter="verified" data-t="tab-verified" data-testid="tab-verified">✓ Verified</button>
+    <button class="tab-btn" data-filter="flagged" data-t="tab-flagged" data-testid="tab-flagged">⚠ Flagged</button>
+    <button class="tab-btn" data-filter="sofia" data-testid="tab-sofia">Sofia</button>
+    <button class="tab-btn" data-filter="varna" data-testid="tab-varna">Varna</button>
+    <button class="tab-btn" data-filter="plovdiv" data-testid="tab-plovdiv">Plovdiv</button>
+  </div>
+  <div id="broker-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" data-testid="broker-grid">
+    <!-- cards injected by JS -->
+  </div>
+</section>
+
+<!-- TESTIMONIALS / TRUST -->
+<section class="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="text-center mb-12">
+    <p class="kicker mb-3" data-t="trust-eyebrow">Why RentShield</p>
+    <h2 class="font-syne font-extrabold text-3xl sm:text-4xl text-white" data-t="trust-title">Built on real reports. Trusted by real renters.</h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-5">
+    <div class="glass rounded-2xl p-6 glass-h">
+      <div class="flex gap-1 mb-3">
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed" data-t="t1">"Saved me €800. The phone I was about to send a deposit to was already flagged 12 times in Varna."</p>
+      <div class="mt-4 text-xs text-slate-500">— M. Dimitrov, Sofia → Varna relocation</div>
+    </div>
+    <div class="glass rounded-2xl p-6 glass-h">
+      <div class="flex gap-1 mb-3">
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed" data-t="t2">"As an expat moving to Sofia, the bulk verification feature let me check 20 listings at once. Three were scams."</p>
+      <div class="mt-4 text-xs text-slate-500">— K. Novak, Czech expat</div>
+    </div>
+    <div class="glass rounded-2xl p-6 glass-h">
+      <div class="flex gap-1 mb-3">
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+        <svg width="14" height="14" fill="#34d399" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5 2 7L12 16.5 5.5 20.5l2-7L2 9h7z"/></svg>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed" data-t="t3">"Our agency got verified — clients literally tell us they chose us because of the green badge."</p>
+      <div class="mt-4 text-xs text-slate-500">— Anna I., Licensed agency, Plovdiv</div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT FORM -->
+<section id="report-section" class="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="glass rounded-3xl p-8 sm:p-10" data-testid="report-form-wrap">
+    <div class="flex items-center gap-3 mb-8">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(248,113,113,.15)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <h2 class="font-syne font-extrabold text-2xl text-white" data-t="report-title">Report a Scam</h2>
+        <p class="text-xs text-slate-500" data-t="report-sub">Anonymous. Moderators verify within 48h. Always free.</p>
+      </div>
+    </div>
+    <form class="grid sm:grid-cols-2 gap-4" onsubmit="submitReport(event)" data-testid="report-form">
+      <div class="sm:col-span-2">
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-name">Broker / Landlord Name</label>
+        <input type="text" class="fi w-full px-4 py-3 text-sm" placeholder="Full name or business name..." required data-testid="rep-name" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-phone">Phone Number</label>
+        <input type="tel" class="fi w-full px-4 py-3 text-sm font-mono2" placeholder="+359..." required data-testid="rep-phone" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-email">Email Address</label>
+        <input type="email" class="fi w-full px-4 py-3 text-sm font-mono2" placeholder="example@domain.com" data-testid="rep-email" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-city">City</label>
+        <select class="fi w-full px-4 py-3 text-sm" required data-testid="rep-city">
+          <option value="" disabled selected>Select city...</option>
+          <option>Sofia</option><option>Varna</option><option>Plovdiv</option><option>Burgas</option><option>Ruse</option>
+          <option>Stara Zagora</option><option>Pleven</option><option>Veliko Tarnovo</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-scam-type">Scam Type</label>
+        <select class="fi w-full px-4 py-3 text-sm" required data-testid="rep-type">
+          <option value="" disabled selected>Select type...</option>
+          <option>Stolen Deposit</option>
+          <option>Fake Listing</option>
+          <option>Double Renting</option>
+          <option>Identity Fraud</option>
+          <option>Hidden Fees</option>
+          <option>Forged Documents</option>
+          <option>Phantom Agency</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-t="field-desc">Description</label>
+        <textarea class="fi w-full px-4 py-3 text-sm resize-none" rows="4" placeholder="Describe what happened: dates, amounts, how contact was made..." required data-testid="rep-desc"></textarea>
+      </div>
+      <div class="sm:col-span-2">
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" class="mt-0.5 accent-emerald-500" required data-testid="rep-tos" />
+          <span class="text-xs text-slate-400 leading-relaxed" data-t="tos-agree">I agree to the <a href="#" onclick="openModal('tos-modal');return false" class="text-emerald-400 hover:underline">Terms of Service</a> and confirm this report is accurate to the best of my knowledge. I accept personal responsibility for this submission under GDPR Article 82.</span>
+        </label>
+      </div>
+      <div class="sm:col-span-2">
+        <button type="submit" class="btn-p w-full py-3.5 rounded-xl text-white text-sm font-semibold flex items-center justify-center gap-2" data-testid="rep-submit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          <span data-t="report-submit">Submit Anonymous Report</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="rounded-3xl p-10 text-center relative overflow-hidden" style="background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(5,150,105,.04));border:1px solid rgba(52,211,153,.3)" data-testid="cta-strip">
+    <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 30% 50%,rgba(16,185,129,.3),transparent 50%)"></div>
+    <div class="relative z-10">
+      <h3 class="font-syne font-extrabold text-3xl sm:text-4xl text-white mb-3" data-t="cta-title">Don't be the next victim. Search before you sign.</h3>
+      <p class="text-sm text-slate-300 mb-7 max-w-xl mx-auto" data-t="cta-sub">Over €218,000 in fraud already prevented. Free for everyone — power-user features from just €10/mo.</p>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <a href="#search" class="btn-p px-6 py-3 rounded-xl text-white text-sm font-semibold" data-t="cta-search" data-testid="cta-search">Search Free Now</a>
+        <a href="#pricing" class="btn-ghost px-6 py-3 rounded-xl text-emerald-300 text-sm font-semibold" data-t="cta-upgrade" data-testid="cta-upgrade">See Pro Plans</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pb-12 border-t pt-12" style="border-color:var(--line)" data-testid="footer">
+  <div class="grid md:grid-cols-4 gap-8 mb-10">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-2.5 mb-4">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#10b981,#059669)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="font-syne font-bold text-white text-base">RentShield <span class="text-emerald-400">BG</span></div>
+      </div>
+      <p class="text-sm text-slate-500 max-w-md leading-relaxed" data-t="footer-about">Community-built fraud-prevention layer for the Bulgarian rental market. Free for everyone. Independent. GDPR-compliant.</p>
+    </div>
+    <div>
+      <div class="text-xs font-semibold text-white uppercase tracking-widest mb-3" data-t="foot-product">Product</div>
+      <ul class="space-y-2 text-sm text-slate-500">
+        <li><a href="#search" class="hover:text-emerald-400 transition-colors">Search</a></li>
+        <li><a href="#directory" class="hover:text-emerald-400 transition-colors">Broker Directory</a></li>
+        <li><a href="#pricing" class="hover:text-emerald-400 transition-colors">Pricing</a></li>
+        <li><a href="#report-section" class="hover:text-emerald-400 transition-colors">Report a Scam</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-xs font-semibold text-white uppercase tracking-widest mb-3" data-t="foot-legal">Legal</div>
+      <ul class="space-y-2 text-sm text-slate-500">
+        <li><a href="#" onclick="openModal('tos-modal');return false" class="hover:text-emerald-400 transition-colors">Terms of Service</a></li>
+        <li><a href="#" onclick="openModal('tos-modal');return false" class="hover:text-emerald-400 transition-colors">Privacy / GDPR</a></li>
+        <li><a href="mailto:donda.digital@gmail.com" class="hover:text-emerald-400 transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-8 border-t" style="border-color:var(--line)">
+    <p class="text-xs text-slate-500">© 2026 RentShield BG · Operated under Bulgarian law · Sofia</p>
+    <p class="text-xs text-slate-500">Built with <span class="text-emerald-400">♥</span> in Sofia · donda.digital@gmail.com</p>
+  </div>
+</footer>
+
+<!-- TOS MODAL -->
+<div id="tos-modal" class="mo" data-testid="tos-modal">
+  <div class="mb glass rounded-3xl p-8 w-full max-w-2xl" style="max-height:85vh;overflow-y:auto">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex gap-2">
+        <button class="tab-btn active" id="tos-tab-en" onclick="tosLang('en')">English</button>
+        <button class="tab-btn" id="tos-tab-bg" onclick="tosLang('bg')">Български</button>
+      </div>
+      <button onclick="closeModal('tos-modal')" class="text-slate-500 hover:text-white" data-testid="tos-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="tos-content-en" class="tos-content">
+      <h3>Terms of Service &amp; Privacy Policy — RentShield BG</h3>
+      <p><em>Last updated: January 2026. Operated by RentShield BG. Contact: donda.digital@gmail.com</em></p>
+
+      <h3>1. Platform Nature and Disclaimer</h3>
+      <p>RentShield BG ("the Platform") is a community-contributed information service. All content, reports, and data entries on this Platform are submitted exclusively by third-party users. RentShield BG acts solely as a neutral publisher and technology host of user-generated content. The Platform does not independently verify, endorse, or guarantee the accuracy of any submission.</p>
+
+      <h3>2. User Responsibility and Data Controller Status</h3>
+      <p>By submitting any content, you ("the Submitter") declare that you are the independent data controller of the personal data you submit (GDPR Art. 4(7)), that your submission is accurate to the best of your knowledge and you have a lawful basis under GDPR Art. 6(1)(f), and that you accept full personal legal responsibility for any damages, claims, or liabilities arising from your submission under GDPR Article 82, Bulgarian ZZLD and the Electronic Commerce Act.</p>
+
+      <h3>3. GDPR Compliance</h3>
+      <p>Legal basis: legitimate interests (GDPR Art. 6(1)(f)) — consumer protection and fraud prevention. Data minimisation: only phone, email, city, scam type and description are stored. Retention: 36 months or until successfully disputed. Right to erasure: requests to donda.digital@gmail.com — processed within 30 days. Data is hosted on EU-based infrastructure.</p>
+
+      <h3>4. Payment &amp; Subscription Terms</h3>
+      <p>All searches on the Platform are <strong>free</strong>. Optional Pro subscriptions are: Visitor Pro €10/month (power-user features), Broker Pro €20/month (verified badge &amp; directory placement). Subscriptions are recurring, processed by Stripe, and cancellable at any time. Cancelling stops future billing; access continues until the end of the current billing period. No refunds for partial periods.</p>
+
+      <h3>5. Prohibited Uses</h3>
+      <p>You may not: (a) submit knowingly false or fabricated reports; (b) harass, defame, or target individuals without reasonable factual basis; (c) submit reports for competitive commercial purposes; (d) scrape or misuse the Platform.</p>
+
+      <h3>6. Limitation of Liability</h3>
+      <p>To the maximum extent permitted by law, RentShield BG shall not be liable for any indirect or consequential damages. Total liability shall not exceed €50.</p>
+
+      <h3>7. Governing Law</h3>
+      <p>Governed by the laws of the Republic of Bulgaria. Disputes fall under the exclusive jurisdiction of the Sofia City Court.</p>
+
+      <h3>8. Contact</h3>
+      <p>All questions, GDPR requests, and business inquiries: <strong>donda.digital@gmail.com</strong></p>
+    </div>
+    <div id="tos-content-bg" class="tos-content" style="display:none">
+      <h3>Условия за ползване и Политика за поверителност — RentShield BG</h3>
+      <p><em>Последна актуализация: януари 2026 г. Оператор: RentShield BG. Контакт: donda.digital@gmail.com</em></p>
+
+      <h3>1. Естество на платформата и отказ от отговорност</h3>
+      <p>RentShield BG („Платформата") е информационна услуга с данни от общността. Цялото съдържание е подадено от трети лица. RentShield BG действа единствено като неутрален издател и технологичен хост.</p>
+
+      <h3>2. Отговорност на потребителя и статут на администратор на данни</h3>
+      <p>С подаването вие сте независим администратор на личните данни (GDPR Чл. 4(7)) и приемате пълна лична отговорност по Чл. 82 от GDPR, ЗЗЛД и ЗЕТ.</p>
+
+      <h3>3. Съответствие с GDPR</h3>
+      <p>Правно основание: легитимен интерес (Чл. 6(1)(ф)). Минимизиране: само телефон, имейл, град, тип и описание. Срок: 36 месеца или до оспорване. Право на изтриване: donda.digital@gmail.com — до 30 дни. Данните се съхраняват в ЕС.</p>
+
+      <h3>4. Условия за плащане и абонамент</h3>
+      <p>Всички търсения са <strong>безплатни</strong>. Незадължителни Pro абонаменти: Visitor Pro €10/месец (разширени функции), Broker Pro €20/месец (верифицирана значка и листване). Абонаментите се обработват през Stripe и могат да бъдат отказани по всяко време.</p>
+
+      <h3>5. Забранени употреби</h3>
+      <p>Забранено е подаването на неверни сигнали, тормоз, конкурентни злоупотреби и скрейпинг.</p>
+
+      <h3>6. Ограничаване на отговорността</h3>
+      <p>Общата отговорност не може да надвишава €50.</p>
+
+      <h3>7. Приложимо право</h3>
+      <p>Българско право, юрисдикция — Софийски градски съд.</p>
+
+      <h3>8. Контакт</h3>
+      <p><strong>donda.digital@gmail.com</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast glass rounded-2xl px-5 py-4 flex items-center gap-3 max-w-sm" style="border-color:rgba(52,211,153,.25)" data-testid="toast">
+  <div id="toast-icon" class="flex-shrink-0">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <div>
+    <p id="toast-title" class="text-sm font-semibold text-white">Done</p>
+    <p id="toast-msg" class="text-xs text-slate-400 mt-0.5"></p>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA (community-verified, taken from original site)
+============================================================ */
+const BROKERS = [
+  { name:"Bulgarian Properties", initial:"B", type:"verified", city:"sofia", since:"Since 2000",
+    sub:"Licensed Agency · Sofia / National",
+    desc:"One of Bulgaria's most established agencies. Over 20 years of operation, offices in Sofia, Varna, Plovdiv, Burgas.",
+    tags:["20+ years","National leader","EU buyers"], domain:"bulgarianproperties.com", phone:"+359 2 9 11 50" },
+  { name:"Luximmo", initial:"L", type:"verified", city:"sofia", since:"Since 1996",
+    sub:"Luxury Specialist · Sofia · 51-G Cherni Vrah",
+    desc:"Part of Luximmo Group — Bulgaria's leading luxury real estate group.",
+    tags:["Luxury segment","Since 1996","19,000+ listings"], domain:"luximmo.com", phone:"+359 2 …" },
+  { name:"Suprimmo", initial:"S", type:"verified", city:"sofia", since:"Since 2005",
+    sub:"National Agency · Sofia / Bulgaria-wide",
+    desc:"Major national agency with strong Sofia coverage and international reach.",
+    tags:["18 countries","Sofia specialist","Hybrid model"], domain:"suprimmo.net", phone:"+359 883 700 335" },
+  { name:"Dream Vision Bulgaria", initial:"D", type:"verified", city:"sofia", since:"Since 2011",
+    sub:"Boutique Agency · Sofia",
+    desc:"Founded 2011. Boutique Sofia agency with experienced brokers. Well-regarded among professionals.",
+    tags:["Founded 2011","Boutique","Experienced brokers"], domain:"dreamvisionbulgaria.com", phone:"+359 …" },
+  { name:"Bestay Property", initial:"B", type:"verified", city:"sofia", since:"Since 2008",
+    sub:"Residential Agency · Sofia & Bulgaria",
+    desc:"Sofia agency supporting buyers and sellers across Bulgaria. Multilingual support.",
+    tags:["Residential focus","Investment advice","English support"], domain:"bestay.bg", phone:"+359 …" },
+  { name:"Address Real Estate", initial:"A", type:"verified", city:"varna", since:"Since 2002",
+    sub:"Coast Specialist · Varna · Burgas",
+    desc:"Coast-focused agency with strong presence in Varna and Black Sea region. Trusted by EU buyers.",
+    tags:["Coast specialist","20+ years","EU clients"], domain:"address.bg", phone:"+359 52 …" },
+  { name:"Ivan Petrov Stoyanov", initial:"I", type:"flagged", city:"sofia", reports:7,
+    sub:"Private Landlord · Sofia — Lozenets / Studentski",
+    desc:"7 reports of fake OLX/imot.bg listings for non-existent apartments in Lozenets. Collects 1–2 month deposits then disappears. IBAN: BG80BNBG96611020345678.",
+    tags:["Fake listings","Stolen deposits","7 reports"] },
+  { name:"Nikolay D. Kolev (alias \"N. Dimitrov\")", initial:"N", type:"flagged", city:"varna", reports:12,
+    sub:"Fake Broker · Varna — Morski District",
+    desc:"12 community reports. Active in Varna posing as property owner with forged title documents. Uses multiple aliases. Reported to Varna District Police (ref. 2024).",
+    tags:["Identity fraud","12 reports","Varna active"] },
+  { name:"\"Top Imoti Sofia\" (Unregistered)", initial:"T", type:"flagged", city:"sofia", reports:5,
+    sub:"Phantom Agency · Sofia — advertised online",
+    desc:"Phantom agency matching pattern described by NREA Chairman Bochev (BTA, Feb 2025): fake €500-600/mo rental listings to lure clients. No registered entity in Trade Register.",
+    tags:["Phantom agency","Bait listings","€500-600 bait rents"] },
+  { name:"Georgi Marinov (private)", initial:"G", type:"flagged", city:"plovdiv", reports:4,
+    sub:"Private Landlord · Plovdiv — Kamenitsa",
+    desc:"4 reports of renting the same Plovdiv apartment to multiple tenants simultaneously. Victims found each other via Facebook group \"Пловдив Квартири 2024\".",
+    tags:["Double renting","4 reports","Plovdiv"] }
+];
+
+/* Mock search results — full evidence shown FREE */
+const MOCK_RESULTS = {
+  "+359888123456": {
+    name:"Ivan Petrov Stoyanov", type:"flagged", reports:7, city:"Sofia · Lozenets",
+    summary:"Flagged 7 times for stolen deposits on fake OLX/imot.bg listings.",
+    evidence:[
+      { kind:"Screenshot", label:"Fake OLX listing — 12 Mar 2025", desc:"Studio in Lozenets, €350/mo, request 2-month deposit before viewing." },
+      { kind:"Screenshot", label:"WhatsApp transcript — 14 Mar 2025", desc:"Asks for IBAN transfer, refuses cash on viewing." },
+      { kind:"Bank trace", label:"IBAN BG80BNBG96611020345678", desc:"Linked to 5 of 7 reported victims." },
+      { kind:"Police", label:"Sofia District Police case ref. 2025/0418", desc:"Open investigation — formal complaint filed Apr 2025." }
+    ],
+    aliases:["Ivan Stoyanov","I. P. Stoyanov","Иван Петров"],
+    history:[
+      { date:"2025-04-18", event:"Police report filed" },
+      { date:"2025-03-22", event:"4th community report" },
+      { date:"2024-11-09", event:"1st community report" }
+    ]
+  },
+  "ivan.petrov.rental@gmail.com": {
+    name:"Ivan Petrov Stoyanov", type:"flagged", reports:7, city:"Sofia",
+    summary:"Email linked to phone +359888123456 — 7 confirmed scam reports.",
+    evidence:[
+      { kind:"Email", label:"Listing reply — 5 Feb 2025", desc:"Asks for €700 deposit before in-person viewing." },
+      { kind:"Screenshot", label:"Facebook Marketplace ad", desc:"Same flat advertised to 3 different tenants." }
+    ],
+    aliases:["ivan.p.rental","ipetrov.rentals"],
+    history:[
+      { date:"2025-02-05", event:"7th community report" },
+      { date:"2024-12-20", event:"5th community report" }
+    ]
+  },
+  "+359777999888": {
+    name:"Nikolay D. Kolev", type:"flagged", reports:12, city:"Varna · Morski",
+    summary:"Identity fraud — uses multiple aliases. 12 reports. Police case open.",
+    evidence:[
+      { kind:"Document", label:"Forged title deed (excerpt)", desc:"Compared with Cadastral Agency record — altered owner field." },
+      { kind:"Screenshot", label:"\"N. Dimitrov\" listing — Imot.bg", desc:"Photo matches scam reported under name \"Kolev\"." },
+      { kind:"Police", label:"Varna District Police ref. 2024/2298", desc:"Open investigation since Sep 2024." }
+    ],
+    aliases:["Nikolay Kolev","N. Dimitrov","Nikola D.","Николай Колев"],
+    history:[
+      { date:"2024-09-01", event:"Police report" },
+      { date:"2024-07-14", event:"10th community report" },
+      { date:"2024-03-30", event:"1st community report" }
+    ]
+  }
+};
+
+/* ============================================================
+   I18N translations (EN/BG)
+============================================================ */
+const I18N = {
+  en: { /* defaults already in HTML — EN is source of truth */ },
+  bg: {
+    "hero-eyebrow":"База данни №1 за наемни измами в България",
+    "hero-h1a":"Проверете преди",
+    "hero-h1b":"да подпишете или платите.",
+    "hero-sub":"Търсете телефон или имейл напълно безплатно. Веднага виждате дали брокер или хазяин е докладван за фалшиви обяви, откраднати депозити или измами в България.",
+    "search-btn":"Търсене",
+    "search-hint":"100% безплатно търсене — пълни доказателства, скрийншоти и история. Без платена стена.",
+    "try-label":"Опитайте:",
+    "stat1":"Подадени сигнали","stat2":"Потвърдени измамници","stat3":"Предотвратени измами","stat4":"Верифицирани брокери",
+    "hiw-eyebrow":"Как работи","hiw-title":"Просто. Бързо. Доверено.",
+    "hiw-sub":"Безплатно за всички. Незадължителен абонамент за активните потребители.",
+    "step1-title":"Безплатно търсене",
+    "step1-desc":"Въведете телефон или имейл. Виждате пълните сигнали — без платена стена, без регистрация.",
+    "step2-title":"Сигнал и защита",
+    "step2-desc":"Измамени? Подайте анонимен сигнал. Модераторите проверяват до 48ч и защитават бъдещи наематели.",
+    "step3-title":"Pro (по желание)",
+    "step3-desc":"Надстройте за неограничени групови проверки, известия, история и експорти — или станете верифициран брокер.",
+    "pricing-eyebrow":"Цени",
+    "pricing-title":"Завинаги безплатно. Pro когато искате повече.",
+    "pricing-sub":"Три нива. Без скрити такси. Откажете по всяко време.",
+    "tier-free-label":"Безплатно","forever":"завинаги",
+    "tier-free-sub":"За всеки, който се пази от наемни измами.",
+    "free-f1":"Неограничено безплатно търсене по телефон или имейл",
+    "free-f2":"Пълни детайли на сигналите — без платена стена",
+    "free-f3":"Преглед на каталога на верифицирани брокери",
+    "free-f4":"Подаване на анонимни сигнали",
+    "free-cta":"Започнете да търсите",
+    "tier-visitor-label":"Pro · Посетител","popular":"НАЙ-ПОПУЛЯРНО","per-month":"/месец",
+    "tier-visitor-sub":"За наематели, чужденци и сериозни търсачи.",
+    "vis-f0":"Всичко от Безплатно, плюс:",
+    "vis-f1":"<b class=\"text-white\">Списък за наблюдение</b> — известие веднага щом телефон/имейл бъде сигнализиран",
+    "vis-f2":"<b class=\"text-white\">Групова проверка</b> — поставете CSV / списък контакти, получете риск-доклад",
+    "vis-f3":"<b class=\"text-white\">История на търсенията</b> — всяка проверка запазена, с PDF експорт",
+    "vis-f4":"<b class=\"text-white\">Лента с нови измами</b> — седмично резюме за вашия град",
+    "vis-f5":"<b class=\"text-white\">Trust Score™</b> — патентован рейтинг на риск за всеки контакт",
+    "vis-f6":"<b class=\"text-white\">Браузър разширение</b> — автоматична проверка на обявите в OLX, imot.bg и Facebook",
+    "vis-cta":"Абонирай се — €10 / месец","cancel-anytime":"Защитено от Stripe · Откажете по всяко време",
+    "tier-broker-label":"Pro · Брокер / Агенция","per-month-2":"/месец",
+    "tier-broker-sub":"За брокери и агенции, които искат доверие от първия ден.",
+    "br-f0":"Всичко от Visitor Pro, плюс:",
+    "br-f1":"<b class=\"text-white\">Зелена верифицирана значка</b> на публичния ви профил",
+    "br-f2":"<b class=\"text-white\">Поставяне</b> в Каталога на верифицирани брокери",
+    "br-f3":"<b class=\"text-white\">Странична лента</b> в резултатите от търсене за вашия град",
+    "br-f4":"<b class=\"text-white\">Персонализирана профил страница</b> — био, лиценз, обяви, контакт",
+    "br-f5":"<b class=\"text-white\">Месечно подновяване</b> на верификацията + проверка на история",
+    "br-f6":"<b class=\"text-white\">„Trusted by RentShield\"</b> вграждаща се значка за вашия сайт",
+    "br-cta":"Верифицирай се — €20 / месец","approval-48h":"Одобрение до 48ч · Откажете по всяко време",
+    "pricing-foot":"Всички плащания през Stripe. ДДС включен, където е приложимо.",
+    "dir-eyebrow":"Каталог на брокери","dir-title":"Верифицирани и сигнализирани брокери",
+    "dir-sub":"Данни от общността. Зелено = верифициран. Червено = сигнализиран.",
+    "tab-all":"Всички","tab-verified":"✓ Верифицирани","tab-flagged":"⚠ Сигнализирани",
+    "trust-eyebrow":"Защо RentShield","trust-title":"Изградено върху реални сигнали. Доверено от реални наематели.",
+    "t1":"\"Спести ми €800. Телефонът, на който щях да изпратя депозит, вече беше сигнализиран 12 пъти във Варна.\"",
+    "t2":"\"Като чужденец, групово проверих 20 обяви наведнъж. Три бяха измами.\"",
+    "t3":"\"Нашата агенция беше верифицирана — клиенти буквално казват, че избраха нас заради зелената значка.\"",
+    "report-title":"Подайте сигнал за измама","report-sub":"Анонимно. Модераторите проверяват до 48ч. Винаги безплатно.",
+    "field-name":"Име на брокер / хазяин","field-phone":"Телефонен номер","field-email":"Имейл","field-city":"Град",
+    "field-scam-type":"Вид измама","field-desc":"Описание","tos-agree":"Съгласен съм с <a href=\"#\" onclick=\"openModal('tos-modal');return false\" class=\"text-emerald-400 hover:underline\">Условията за ползване</a> и потвърждавам, че сигналът е верен. Приемам лична отговорност съгласно Чл. 82 от GDPR.",
+    "report-submit":"Подайте анонимен сигнал",
+    "cta-title":"Не бъдете следващата жертва. Проверете преди да подпишете.",
+    "cta-sub":"Над €218 000 предотвратени измами. Безплатно за всички — Pro функции от €10/мес.",
+    "cta-search":"Търсете безплатно сега","cta-upgrade":"Вижте Pro плановете",
+    "footer-about":"Защитен слой срещу измами в българския наемен пазар, изграден от общността. Безплатно. Независимо. GDPR-съвместимо.",
+    "foot-product":"Продукт","foot-legal":"Правни"
+  }
+};
+
+/* ============================================================
+   RENDER BROKER CARDS
+============================================================ */
+function brokerCard(b){
+  const isBad = b.type === "flagged";
+  const initialBg = isBad ? "rgba(248,113,113,.12)" : "rgba(16,185,129,.12)";
+  const initialFg = isBad ? "#f87171" : "#34d399";
+  const tagBg = isBad ? "rgba(248,113,113,.1)" : "rgba(16,185,129,.1)";
+  const tagFg = isBad ? "#f87171" : "#34d399";
+  return `
+  <div class="bcard ${isBad?'bad':''} glass-h glass rounded-2xl p-5" data-type="${b.type}" data-city="${b.city}">
+    <div class="flex items-start justify-between gap-3 mb-3">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg font-bold font-syne" style="background:${initialBg};color:${initialFg}">${b.initial}</div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <p class="font-syne font-bold text-white text-sm">${b.name}</p>
+            ${isBad
+              ? `<span class="bdg bf" style="font-size:9px;padding:2px 8px">⚠ FLAGGED</span>`
+              : `<span class="vbadge" style="font-size:9px;padding:2px 7px"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>VERIFIED</span>`
+            }
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">${b.sub}</p>
+        </div>
+      </div>
+      ${isBad
+        ? `<span class="text-xs text-red-400 font-semibold whitespace-nowrap">${b.reports} reports</span>`
+        : `<span class="text-xs text-emerald-500 font-semibold whitespace-nowrap">${b.since}</span>`}
+    </div>
+    <p class="text-xs text-slate-400 mb-3 leading-relaxed">${b.desc}</p>
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      ${b.tags.map(t=>`<span class="text-[10px] px-2 py-0.5 rounded-md font-medium" style="background:${tagBg};color:${tagFg}">${t}</span>`).join("")}
+    </div>
+    ${b.domain ? `<div class="flex items-center gap-2 text-xs text-slate-500"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>${b.domain}</div>` : ""}
+    ${b.phone ? `<div class="flex items-center gap-2 text-xs text-slate-500 mt-1"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${b.phone}</div>` : ""}
+    ${isBad ? `<button onclick="quickSearch('${b.name}')" class="mt-3 text-xs px-3 py-1.5 rounded-lg font-medium" style="background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.2)" data-testid="search-flag">🔍 Search this contact</button>`:""}
+  </div>`;
+}
+
+function renderBrokers(filter="all"){
+  const grid = document.getElementById("broker-grid");
+  let list = BROKERS;
+  if(filter === "verified") list = BROKERS.filter(b=>b.type==="verified");
+  else if(filter === "flagged") list = BROKERS.filter(b=>b.type==="flagged");
+  else if(["sofia","varna","plovdiv"].includes(filter)) list = BROKERS.filter(b=>b.city===filter);
+  grid.innerHTML = list.map(brokerCard).join("");
+}
+
+document.querySelectorAll(".tab-btn[data-filter]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn[data-filter]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    renderBrokers(btn.dataset.filter);
+  });
+});
+renderBrokers();
+
+/* ============================================================
+   SEARCH (free, full results)
+============================================================ */
+function quickSearch(v){
+  document.getElementById("searchInput").value = v;
+  runSearch();
+}
+
+function runSearch(){
+  const q = document.getElementById("searchInput").value.trim();
+  const cc = document.getElementById("countryCode").value;
+  const sec = document.getElementById("results-section");
+  const title = document.getElementById("results-title");
+  const cont = document.getElementById("results-container");
+  const side = document.getElementById("broker-sidebar");
+
+  if(!q){ toast("Enter a phone or email","warn"); return; }
+
+  // resolve key
+  let key = q;
+  if(!q.includes("@") && !q.startsWith("+")){ key = cc + q.replace(/^0+/,""); }
+  const found = MOCK_RESULTS[key] || MOCK_RESULTS[q];
+
+  sec.style.display = "block";
+  sec.scrollIntoView({ behavior:"smooth", block:"start" });
+
+  if(found){
+    title.innerHTML = `<span class="text-red-400">⚠ Match found</span> for <span class="font-mono2 text-slate-200">${escapeHtml(q)}</span>`;
+    cont.innerHTML = renderScamResult(found);
+  } else {
+    title.innerHTML = `<span class="text-emerald-400">✓ No scam reports</span> for <span class="font-mono2 text-slate-200">${escapeHtml(q)}</span>`;
+    cont.innerHTML = renderCleanResult(q);
+  }
+
+  // sidebar: verified brokers (top 3)
+  side.innerHTML = `
+    <div class="glass rounded-2xl p-5">
+      <p class="text-[10px] font-bold tracking-widest text-emerald-400 uppercase mb-3">Trusted in your area</p>
+      ${BROKERS.filter(b=>b.type==="verified").slice(0,3).map(b=>`
+        <div class="flex items-center gap-3 py-2 border-t" style="border-color:var(--line)">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold font-syne" style="background:rgba(16,185,129,.12);color:#34d399">${b.initial}</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-white truncate">${b.name}</p>
+            <p class="text-[11px] text-slate-500 truncate">${b.sub}</p>
+          </div>
+          <span class="vbadge" style="font-size:8px;padding:1px 6px">✓</span>
+        </div>`).join("")}
+    </div>
+    <div class="rounded-2xl p-5" style="background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(255,255,255,.02));border:1px solid rgba(52,211,153,.25)">
+      <p class="font-syne font-bold text-white text-base mb-2">Want alerts on this contact?</p>
+      <p class="text-xs text-slate-400 mb-4">Add it to your watchlist and get notified the moment a new report drops. Available on Visitor Pro.</p>
+      <a href="#pricing" class="btn-p block text-center py-2.5 rounded-lg text-white text-xs font-semibold" data-testid="side-upgrade">Upgrade — €10/mo</a>
+    </div>`;
+}
+
+function renderScamResult(r){
+  return `
+  <div class="glass rounded-2xl p-6" style="border-color:rgba(248,113,113,.3)">
+    <div class="flex items-start justify-between gap-3 mb-5">
+      <div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="bdg bf" style="font-size:10px;padding:3px 9px">⚠ FLAGGED</span>
+          <span class="text-xs text-slate-500">${r.city}</span>
+        </div>
+        <h3 class="font-syne font-extrabold text-2xl text-white">${r.name}</h3>
+        <p class="text-sm text-slate-400 mt-1">${r.summary}</p>
+      </div>
+      <div class="text-right flex-shrink-0">
+        <div class="font-syne font-extrabold text-3xl text-red-400">${r.reports}</div>
+        <div class="text-[10px] text-slate-500 uppercase tracking-widest">reports</div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2">Evidence</p>
+      <div class="grid sm:grid-cols-2 gap-2">
+        ${r.evidence.map(e=>`
+          <div class="rounded-xl p-3" style="background:rgba(255,255,255,.025);border:1px solid var(--line)">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded" style="background:rgba(248,113,113,.12);color:#f87171">${e.kind}</span>
+              <span class="text-xs text-slate-300 font-semibold">${e.label}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-relaxed">${e.desc}</p>
+          </div>`).join("")}
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-5 mb-5">
+      <div>
+        <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2">Known aliases</p>
+        <div class="flex flex-wrap gap-1.5">${r.aliases.map(a=>`<span class="text-[10px] font-mono2 px-2 py-1 rounded-md" style="background:rgba(248,113,113,.08);color:#fecaca">${a}</span>`).join("")}</div>
+      </div>
+      <div>
+        <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2">History</p>
+        <ul class="space-y-1">${r.history.map(h=>`<li class="text-[11px] text-slate-400"><span class="font-mono2 text-slate-500">${h.date}</span> · ${h.event}</li>`).join("")}</ul>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <a href="#report-section" class="btn-ghost px-4 py-2 rounded-lg text-xs font-semibold text-emerald-300">+ Add your report</a>
+      <a href="#pricing" class="btn-p px-4 py-2 rounded-lg text-white text-xs font-semibold">Track this contact — Pro €10/mo</a>
+    </div>
+  </div>`;
+}
+
+function renderCleanResult(q){
+  return `
+  <div class="glass rounded-2xl p-6" style="border-color:rgba(52,211,153,.3)">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,.15)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <h3 class="font-syne font-extrabold text-xl text-white">No reports found</h3>
+        <p class="text-sm text-slate-400"><span class="font-mono2 text-emerald-300">${escapeHtml(q)}</span> has no community reports.</p>
+      </div>
+    </div>
+    <div class="rounded-xl p-4 mb-4" style="background:rgba(255,255,255,.025);border:1px solid var(--line)">
+      <p class="text-xs text-slate-400 leading-relaxed">No record does not guarantee safety. New scammers appear daily — always meet in person, verify property documents, and never wire deposits before viewing.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="#report-section" class="btn-ghost px-4 py-2 rounded-lg text-xs font-semibold text-emerald-300">Report a scam</a>
+      <a href="#pricing" class="btn-p px-4 py-2 rounded-lg text-white text-xs font-semibold">Get alerts — Pro €10/mo</a>
+    </div>
+  </div>`;
+}
+
+function escapeHtml(s){ return (s||"").replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+
+/* ============================================================
+   REPORT SUBMIT (mock)
+============================================================ */
+function submitReport(e){
+  e.preventDefault();
+  toast("Report submitted","Thanks — our moderators will review within 48h.");
+  e.target.reset();
+}
+
+/* ============================================================
+   MODALS
+============================================================ */
+function openModal(id){
+  if(id === "pricing-jump"){ document.getElementById("pricing").scrollIntoView({behavior:"smooth"}); return; }
+  document.getElementById(id).classList.add("show");
+}
+function closeModal(id){ document.getElementById(id).classList.remove("show"); }
+document.querySelectorAll(".mo").forEach(m=>m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); }));
+
+function tosLang(l){
+  document.getElementById("tos-tab-en").classList.toggle("active", l==="en");
+  document.getElementById("tos-tab-bg").classList.toggle("active", l==="bg");
+  document.getElementById("tos-content-en").style.display = l==="en" ? "block" : "none";
+  document.getElementById("tos-content-bg").style.display = l==="bg" ? "block" : "none";
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer;
+function toast(title, msg){
+  document.getElementById("toast-title").textContent = title;
+  document.getElementById("toast-msg").textContent = msg || "";
+  const el = document.getElementById("toast");
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove("show"), 3200);
+}
+
+/* ============================================================
+   LANGUAGE TOGGLE
+============================================================ */
+const ORIGINAL = {};
+function setLang(lang){
+  document.getElementById("lang-en").classList.toggle("bg-emerald-500/15", lang==="en");
+  document.getElementById("lang-en").classList.toggle("text-emerald-300", lang==="en");
+  document.getElementById("lang-en").classList.toggle("text-slate-400", lang!=="en");
+  document.getElementById("lang-bg").classList.toggle("bg-emerald-500/15", lang==="bg");
+  document.getElementById("lang-bg").classList.toggle("text-emerald-300", lang==="bg");
+  document.getElementById("lang-bg").classList.toggle("text-slate-400", lang!=="bg");
+
+  document.querySelectorAll("[data-t]").forEach(el=>{
+    const key = el.dataset.t;
+    if(!ORIGINAL[key]) ORIGINAL[key] = el.innerHTML;
+    if(lang==="bg" && I18N.bg[key]) el.innerHTML = I18N.bg[key];
+    else el.innerHTML = ORIGINAL[key];
+  });
+
+  // placeholders
+  document.querySelectorAll("[data-placeholder-en]").forEach(el=>{
+    el.placeholder = lang==="bg" ? (el.dataset.placeholderBg||el.dataset.placeholderEn) : el.dataset.placeholderEn;
+  });
+
+  document.documentElement.lang = lang;
+}
+document.getElementById("lang-en").addEventListener("click", ()=>setLang("en"));
+document.getElementById("lang-bg").addEventListener("click", ()=>setLang("bg"));
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+},{ threshold:.12 });
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* ============================================================
+   COUNTERS
+============================================================ */
+const counterIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const target = +e.target.dataset.counter;
+      const step = Math.max(1, Math.floor(target/60));
+      let cur = 0;
+      const iv = setInterval(()=>{
+        cur += step;
+        if(cur >= target){ e.target.textContent = target.toLocaleString(); clearInterval(iv); }
+        else e.target.textContent = cur.toLocaleString();
+      }, 22);
+      counterIO.unobserve(e.target);
+    }
+  });
+},{ threshold:.4 });
+document.querySelectorAll("[data-counter]").forEach(el=>counterIO.observe(el));
+</script>
+
+</body>
+</html>
