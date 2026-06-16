@@ -211,6 +211,7 @@ html{scroll-behavior:smooth;}
       <a href="#directory" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_directory">Directory</a>
       <a href="#contract-scan" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_contract_scan">Contract Scan</a>
       <a href="#toolbox" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_toolbox">Tools</a>
+      <a href="#expat-tools" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_expat">Expat Hub</a>
       <a href="#pricing" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_pricing">Pricing</a>
       <a href="#report-section" class="px-3 py-2 text-xs text-slate-400 hover:text-white transition-colors" data-i18n="nav_report">Report</a>
     </div>
@@ -378,6 +379,8 @@ html{scroll-behavior:smooth;}
   <div class="flex gap-2 mb-6 flex-wrap">
     <button class="dash-tab active" data-dashtab="scans" onclick="switchDashTab('scans')" data-i18n="dash_tab_scans">Contract Scans</button>
     <button class="dash-tab" data-dashtab="protocols" onclick="switchDashTab('protocols')" data-i18n="dash_tab_protocols">Move-in Protocols</button>
+    <button class="dash-tab" data-dashtab="bureaucracy" onclick="switchDashTab('bureaucracy')" data-i18n="dash_tab_bureaucracy">Bureaucracy Progress</button>
+    <button class="dash-tab" data-dashtab="starterpack" onclick="switchDashTab('starterpack')" data-i18n="dash_tab_starterpack">Starter Pack</button>
   </div>
   <div id="dash-scans-panel">
     <div id="dash-scans-list"></div>
@@ -389,6 +392,28 @@ html{scroll-behavior:smooth;}
     <div id="dash-protocols-list"></div>
     <div id="dash-protocols-empty" class="text-center py-12 rounded-2xl glass hidden">
       <p class="text-sm text-slate-400" data-i18n="dash_no_protocols">No move-in protocols saved yet. Try the Move-in Checklist tool below.</p>
+    </div>
+  </div>
+  <div id="dash-bureaucracy-panel" class="hidden">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm font-semibold text-slate-200" data-i18n="br_progress_label">Your progress</span>
+        <span class="font-syne font-extrabold text-emerald-400" id="dash-br-progress-text">0 / 6</span>
+      </div>
+      <div class="processing-bar mb-2"><div class="processing-fill" id="dash-br-progress-bar" style="width:0%;transition:width .4s"></div></div>
+      <p class="text-xs text-slate-500 mt-3"><span id="dash-br-complete-count">0</span> <span data-i18n="dash_bureaucracy_complete">tasks completed</span></p>
+    </div>
+  </div>
+  <div id="dash-starterpack-panel" class="hidden">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" id="dash-sp-icon-wrap" style="background:rgba(148,163,184,.12)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" id="dash-sp-icon"><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <span class="font-syne font-bold text-white" id="dash-sp-status" data-i18n="dash_starterpack_inactive">Starter Pack: Not purchased</span>
+      </div>
+      <p class="text-xs text-slate-500 mb-4" data-i18n="dash_starterpack_includes">Includes 1x Contract Scan, Digital Checklist, SMS Templates, PDF Survival Guide.</p>
+      <a href="#stripe-checkout" onclick="stripeCheckoutPlaceholder('starter');return false" id="dash-sp-cta" class="inline-block btn-p px-5 py-2.5 rounded-xl text-white text-xs font-semibold" data-i18n="dash_starterpack_cta">Get Starter Pack — €50</a>
     </div>
   </div>
 </section>
@@ -489,12 +514,13 @@ html{scroll-behavior:smooth;}
   <!-- Move-in checklist -->
   <div class="glass tool-card rounded-3xl p-7 mb-6">
     <div class="flex items-center gap-3 mb-5">
-      <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
       <div>
         <h3 class="font-syne font-bold text-white text-lg" data-i18n="mi_title">Move-in Checklist &amp; Photo Vault</h3>
-        <p class="text-xs text-slate-500" data-i18n="mi_sub">Log every defect with a photo before you sign — it's your evidence when the deposit is due back.</p>
+        <p class="text-xs text-slate-500 leading-relaxed" data-i18n="mi_sub">Log every defect with a photo before you sign — it's your evidence when the deposit is due back.</p>
       </div>
     </div>
+    <p class="text-xs text-slate-400 mb-5 leading-relaxed" data-i18n="mi_explainer">Walk through the apartment room by room. For every scratch, stain, crack or broken fixture, add a line below and attach a photo with your phone. This timestamped record becomes your proof if the landlord later disputes the condition of the apartment and tries to withhold your deposit.</p>
     <div id="mi-rows" class="mb-4"></div>
     <button onclick="addChecklistRow()" class="btn-ghost px-4 py-2 rounded-lg text-xs font-semibold text-emerald-300 mb-4" data-i18n="mi_add_row">+ Add a defect / item</button>
     <div class="flex flex-wrap gap-2">
@@ -507,8 +533,11 @@ html{scroll-behavior:smooth;}
     <!-- Utilities calculator -->
     <div class="glass tool-card rounded-3xl p-7">
       <div class="flex items-center gap-3 mb-5">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <h3 class="font-syne font-bold text-white text-lg" data-i18n="uc_title">Utilities Cost Calculator</h3>
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div>
+          <h3 class="font-syne font-bold text-white text-lg" data-i18n="uc_title">Utilities Cost Calculator</h3>
+          <p class="text-xs text-slate-500 leading-relaxed" data-i18n="uc_explainer">Rent is rarely the full story. Heating, electricity and water can add €60–150/month in Bulgaria depending on size, district and season. Estimate your real monthly cost before signing.</p>
+        </div>
       </div>
       <div class="grid sm:grid-cols-2 gap-3 mb-4">
         <div>
@@ -564,18 +593,129 @@ html{scroll-behavior:smooth;}
       </div>
     </div>
 
-    <!-- Safety heatmap -->
+    <!-- Safety & Lifestyle heatmap -->
     <div class="glass tool-card rounded-3xl p-7">
       <div class="flex items-center gap-3 mb-5">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div>
           <h3 class="font-syne font-bold text-white text-lg" data-i18n="hm_title">Neighborhood Safety &amp; Lifestyle</h3>
-          <p class="text-xs text-slate-500" data-i18n="hm_sub">Community-sourced ratings for popular Sofia districts.</p>
+          <p class="text-xs text-slate-500 leading-relaxed" data-i18n="hm_sub">Compare Sofia districts on three things that actually affect daily life: how safe it feels at night, how much you get for your money, and how lively the area is.</p>
         </div>
       </div>
+
+      <p class="text-xs text-slate-400 mb-4 leading-relaxed" data-i18n="hm_explainer">Each district below is scored 0–10 on three independent dimensions. <b class="text-slate-200" data-i18n="hm_legend_safety_b">Safety</b> reflects reported crime levels and how comfortable walking at night feels. <b class="text-slate-200" data-i18n="hm_legend_value_b">Value</b> reflects how much apartment and lifestyle you get per euro of rent compared to the city average. <b class="text-slate-200" data-i18n="hm_legend_nightlife_b">Nightlife</b> reflects density of bars, restaurants and evening activity — handy if you want a quiet street or the opposite. Green is strong, amber is average, red is weak on that dimension.</p>
+
+      <div class="flex items-center gap-4 mb-4 flex-wrap">
+        <div class="flex items-center gap-1.5 text-[11px] text-slate-400"><span class="w-2.5 h-2.5 rounded-full" style="background:#34d399"></span><span data-i18n="hm_legend_strong">Strong (8–10)</span></div>
+        <div class="flex items-center gap-1.5 text-[11px] text-slate-400"><span class="w-2.5 h-2.5 rounded-full" style="background:#fbbf24"></span><span data-i18n="hm_legend_average">Average (6.5–8)</span></div>
+        <div class="flex items-center gap-1.5 text-[11px] text-slate-400"><span class="w-2.5 h-2.5 rounded-full" style="background:#f87171"></span><span data-i18n="hm_legend_weak">Weak (below 6.5)</span></div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 mb-2 px-1">
+        <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500"></span>
+        <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500 text-center" data-i18n="hm_col_safety">Safety</span>
+        <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500 text-center" data-i18n="hm_col_valuelife">Value · Nightlife</span>
+      </div>
       <div id="heatmap-rows"></div>
-      <p class="text-[11px] text-slate-500 mt-3" data-i18n="hm_disclaimer">Scores are illustrative community estimates, not official statistics.</p>
+      <p class="text-[11px] text-slate-500 mt-3" data-i18n="hm_disclaimer">Scores are illustrative community estimates, not official statistics or police data.</p>
     </div>
+  </div>
+</section>
+
+<!-- EXPAT HUB -->
+<section id="expat-tools" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 mb-24 reveal">
+  <div class="text-center mb-12">
+    <p class="kicker mb-3" data-i18n="eh_kicker">Expat Survival Hub</p>
+    <h2 class="font-syne font-extrabold text-4xl sm:text-5xl text-white mb-4" data-i18n="eh_title">Everything You Need to Settle in Bulgaria</h2>
+    <p class="text-sm text-slate-400 max-w-xl mx-auto" data-i18n="eh_sub">Bureaucracy, language, and local know-how — built for foreigners moving to Sofia.</p>
+  </div>
+
+  <!-- Bureaucracy Roadmap -->
+  <div class="glass tool-card rounded-3xl p-7 mb-6">
+    <div class="flex items-center justify-between gap-4 mb-3 flex-wrap">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div>
+          <h3 class="font-syne font-bold text-white text-lg" data-i18n="br_title">Bureaucracy Roadmap</h3>
+          <p class="text-xs text-slate-500" data-i18n="br_sub">Track the paperwork every expat has to deal with. Tick items off as you complete them.</p>
+        </div>
+      </div>
+      <div class="text-right flex-shrink-0">
+        <div class="text-[10px] text-slate-500 uppercase tracking-wide mb-1" data-i18n="br_progress_label">Your progress</div>
+        <div class="font-syne font-extrabold text-2xl text-emerald-400" id="br-progress-text">0 / 6</div>
+      </div>
+    </div>
+    <div class="processing-bar mb-6"><div class="processing-fill" id="br-progress-bar" style="width:0%;transition:width .4s"></div></div>
+    <div id="br-task-list"></div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-6 mb-6">
+    <!-- SMS Generator -->
+    <div class="glass tool-card rounded-3xl p-7">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <div>
+          <h3 class="font-syne font-bold text-white text-lg" data-i18n="sms_title">Language Hack — Landlord SMS Generator</h3>
+          <p class="text-xs text-slate-500 leading-relaxed" data-i18n="sms_sub">Pick a situation, fill in the blanks, and get a polite, professional Bulgarian message ready to send.</p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_situation_label">Situation</label>
+        <select id="sms-situation" class="fi w-full px-4 py-2.5 text-sm">
+          <option value="viewing" data-i18n="sms_situation_viewing">Request a viewing</option>
+          <option value="heating" data-i18n="sms_situation_heating">Report broken heating</option>
+          <option value="complaint" data-i18n="sms_situation_complaint">File a complaint</option>
+          <option value="deposit" data-i18n="sms_situation_deposit">Ask about deposit return</option>
+          <option value="repair" data-i18n="sms_situation_repair">Request a repair</option>
+        </select>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_name_label">Your name</label>
+          <input type="text" id="sms-name" class="fi w-full px-4 py-2.5 text-sm" placeholder="Maria">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_address_label">Address / Apartment</label>
+          <input type="text" id="sms-address" class="fi w-full px-4 py-2.5 text-sm" placeholder="ul. Vitosha 25, apt 4">
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_detail_label">Extra detail (optional)</label>
+        <input type="text" id="sms-detail" class="fi w-full px-4 py-2.5 text-sm" placeholder="e.g. Saturday at 5pm">
+      </div>
+      <button onclick="generateSms()" class="btn-p w-full py-3 rounded-xl text-white text-sm font-semibold mb-4" data-i18n="sms_generate_btn">Generate Message</button>
+      <div id="sms-result" class="hidden">
+        <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_result_label">Ready-to-send message (Bulgarian)</label>
+        <div class="rounded-xl p-4 mb-3 text-sm text-slate-100 leading-relaxed" style="background:rgba(16,185,129,.07);border:1px solid rgba(52,211,153,.22)" id="sms-output-bg"></div>
+        <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-wide" data-i18n="sms_result_label_en">English translation</label>
+        <div class="rounded-xl p-4 mb-4 text-sm text-slate-400 leading-relaxed" style="background:rgba(255,255,255,.02);border:1px solid var(--line)" id="sms-output-en"></div>
+        <button onclick="copySms()" class="btn-ghost w-full py-2.5 rounded-xl text-xs font-semibold text-emerald-300" id="sms-copy-btn" data-i18n="sms_copy_btn">Copy to Clipboard</button>
+      </div>
+    </div>
+
+    <!-- Living Cost Index -->
+    <div class="glass tool-card rounded-3xl p-7">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div>
+          <h3 class="font-syne font-bold text-white text-lg" data-i18n="lci_title">Living Cost Index</h3>
+          <p class="text-xs text-slate-500 leading-relaxed" data-i18n="lci_sub">Crowdsourced average monthly prices by district — beyond just rent.</p>
+        </div>
+      </div>
+      <div id="lci-rows"></div>
+    </div>
+  </div>
+
+  <!-- Expat Meetup Feed -->
+  <div class="glass tool-card rounded-3xl p-7">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.15)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div>
+        <h3 class="font-syne font-bold text-white text-lg" data-i18n="mf_title">Expat Meetup Feed</h3>
+        <p class="text-xs text-slate-500" data-i18n="mf_sub">Upcoming networking and social events for expats in Sofia.</p>
+      </div>
+    </div>
+    <div id="meetup-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
   </div>
 </section>
 
@@ -683,6 +823,32 @@ html{scroll-behavior:smooth;}
       </ul>
       <a href="#stripe-checkout" onclick="stripeCheckoutPlaceholder('broker');return false" class="block w-full text-center py-3.5 rounded-xl btn-gold text-sm font-bold" data-testid="tier-broker-cta" data-i18n="broker_cta">Broker Verified — €20 / month</a>
       <p class="text-[11px] text-slate-500 text-center mt-3" data-i18n="broker_approval">48h approval · Cancel anytime</p>
+    </div>
+  </div>
+
+  <!-- STARTER PACK (one-time bundle) -->
+  <div class="glass rounded-3xl p-7 mt-6 sm:p-8" style="border-color:rgba(52,211,153,.25);background:linear-gradient(135deg,rgba(16,185,129,.07),rgba(255,255,255,.01))" data-testid="tier-starter">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-6 justify-between">
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
+          <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest" data-i18n="tier_starter_name">Premium Expat Starter Pack</span>
+          <span class="text-[10px] font-bold px-2 py-1 rounded-md" style="background:rgba(52,211,153,.18);color:#34d399;border:1px solid rgba(52,211,153,.35)" data-i18n="tier_starter_badge">ONE-TIME</span>
+        </div>
+        <div class="flex items-baseline gap-1 mb-2">
+          <span class="font-syne text-4xl font-extrabold text-white">€50</span>
+          <span class="text-sm text-slate-400" data-i18n="tier_starter_period">one-time</span>
+        </div>
+        <p class="text-sm text-slate-400 mb-3" data-i18n="tier_starter_desc">Everything you need for your first month in Bulgaria, bundled.</p>
+        <ul class="space-y-1.5 text-sm">
+          <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="starter_f1"><b class="text-white">1x Contract Scan</b> — full AI clause analysis</span></li>
+          <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="starter_f2"><b class="text-white">Digital Move-in Checklist</b> — unlimited photo vault entries</span></li>
+          <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="starter_f3"><b class="text-white">SMS Templates</b> — unlimited landlord message generator use</span></li>
+          <li class="flex items-start gap-2 text-slate-300"><svg class="mt-0.5 flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emb)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="starter_f4"><b class="text-white">PDF Survival Guide</b> — bureaucracy, emergency numbers, neighborhood tips</span></li>
+        </ul>
+      </div>
+      <div class="flex-shrink-0 w-full sm:w-auto">
+        <a href="#stripe-checkout" onclick="stripeCheckoutPlaceholder('starter');return false" class="block w-full sm:w-auto text-center px-8 py-3.5 rounded-xl btn-p text-white text-sm font-semibold whitespace-nowrap" data-testid="tier-starter-cta" data-i18n="starter_cta">Get Starter Pack — €50 one-time</a>
+      </div>
     </div>
   </div>
 
@@ -904,6 +1070,50 @@ html{scroll-behavior:smooth;}
   </div>
 </div>
 
+<!-- SOS FLOATING BUTTON -->
+<button id="sos-fab" onclick="openModal('sos-modal')" class="fixed z-40 flex items-center justify-center font-syne font-extrabold text-white" style="bottom:1.5rem;right:1.5rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 10px 30px -8px rgba(239,68,68,.6);font-size:11px;letter-spacing:.05em;" data-testid="sos-fab">
+  <span data-i18n="sos_btn_label">SOS</span>
+</button>
+
+<!-- SOS MODAL -->
+<div id="sos-modal" class="mo">
+  <div class="mb glass rounded-3xl p-0 w-full max-w-lg overflow-hidden">
+    <div class="p-6" style="background:linear-gradient(135deg,rgba(239,68,68,.16),rgba(185,28,28,.05));border-bottom:1px solid rgba(239,68,68,.2)">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(239,68,68,.18)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div>
+            <h3 class="font-syne font-extrabold text-lg text-white" data-i18n="sos_modal_title">Emergency &amp; Help Contacts</h3>
+            <p class="text-xs text-slate-400" data-i18n="sos_modal_sub">Quick access to embassies, 24/7 pharmacies and English-speaking taxis in Bulgaria.</p>
+          </div>
+        </div>
+        <button onclick="closeModal('sos-modal')" class="text-slate-400 hover:text-white flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+    </div>
+    <div class="p-6" style="max-height:65vh;overflow-y:auto">
+      <div class="rounded-xl p-4 mb-4 flex items-center justify-between" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25)">
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-widest text-red-300" data-i18n="sos_general">General Emergency (EU-wide)</div>
+          <div class="text-[11px] text-slate-400 mt-0.5" data-i18n="sos_general_note">Police, ambulance, fire — free, 24/7, English usually available.</div>
+        </div>
+        <a href="tel:112" class="font-syne font-extrabold text-2xl text-red-300 flex-shrink-0 ml-4">112</a>
+      </div>
+
+      <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2" data-i18n="sos_embassies">Local Embassies (Sofia)</p>
+      <div class="space-y-1.5 mb-4" id="sos-embassy-list"></div>
+
+      <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2" data-i18n="sos_pharmacies">24/7 Pharmacies</p>
+      <div class="space-y-1.5 mb-4" id="sos-pharmacy-list"></div>
+
+      <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase mb-2" data-i18n="sos_taxis">English-Speaking Taxis</p>
+      <div class="space-y-1.5 mb-4" id="sos-taxi-list"></div>
+
+      <p class="text-[11px] text-slate-500" data-i18n="sos_disclaimer">Numbers are illustrative for demo purposes — verify current contact details before relying on them in a real emergency.</p>
+      <button onclick="closeModal('sos-modal')" class="btn-ghost w-full py-2.5 rounded-xl text-xs font-semibold text-slate-300 mt-4" data-i18n="sos_close">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div id="toast" class="toast glass rounded-2xl px-5 py-4 flex items-center gap-3 max-w-sm" style="border-color:rgba(52,211,153,.25)" data-testid="toast">
   <div id="toast-icon" class="flex-shrink-0">
@@ -1067,6 +1277,87 @@ const LANG = {
     hm_title:"Neighborhood Safety & Lifestyle", hm_sub:"Community-sourced ratings for popular Sofia districts.",
     hm_disclaimer:"Scores are illustrative community estimates, not official statistics.",
     hm_safety:"Safety", hm_value:"Value", hm_nightlife:"Nightlife",
+    // toolbox explainers (rebuild)
+    mi_explainer:"Walk through the apartment room by room. For every scratch, stain, crack or broken fixture, add a line below and attach a photo with your phone. This timestamped record becomes your proof if the landlord later disputes the condition of the apartment and tries to withhold your deposit.",
+    uc_explainer:"Rent is rarely the full story. Heating, electricity and water can add €60–150/month in Bulgaria depending on size, district and season. Estimate your real monthly cost before signing.",
+    hm_explainer:'Each district below is scored 0–10 on three independent dimensions. <b class="text-slate-200">Safety</b> reflects reported crime levels and how comfortable walking at night feels. <b class="text-slate-200">Value</b> reflects how much apartment and lifestyle you get per euro of rent compared to the city average. <b class="text-slate-200">Nightlife</b> reflects density of bars, restaurants and evening activity — handy if you want a quiet street or the opposite. Green is strong, amber is average, red is weak on that dimension.',
+    hm_legend_safety_b:"Safety", hm_legend_value_b:"Value", hm_legend_nightlife_b:"Nightlife",
+    hm_legend_strong:"Strong (8–10)", hm_legend_average:"Average (6.5–8)", hm_legend_weak:"Weak (below 6.5)",
+    hm_col_safety:"Safety", hm_col_valuelife:"Value · Nightlife",
+    // nav
+    nav_expat:"Expat Hub",
+    // SOS floating button + modal
+    sos_btn_label:"SOS",
+    sos_modal_title:"Emergency &amp; Help Contacts",
+    sos_modal_sub:"Quick access to embassies, 24/7 pharmacies and English-speaking taxis in Bulgaria.",
+    sos_general:"General Emergency (EU-wide)", sos_general_note:"Police, ambulance, fire — free, 24/7, English usually available.",
+    sos_embassies:"Local Embassies (Sofia)",
+    sos_pharmacies:"24/7 Pharmacies",
+    sos_taxis:"English-Speaking Taxis",
+    sos_close:"Close",
+    sos_disclaimer:"Numbers are illustrative for demo purposes — verify current contact details before relying on them in a real emergency.",
+    // Expat Hub page
+    eh_kicker:"Expat Survival Hub", eh_title:"Everything You Need to Settle in Bulgaria",
+    eh_sub:"Bureaucracy, language, and local know-how — built for foreigners moving to Sofia.",
+    // Bureaucracy roadmap
+    br_title:"Bureaucracy Roadmap",
+    br_sub:"Track the paperwork every expat has to deal with. Tick items off as you complete them.",
+    br_progress_label:"Your progress",
+    br_concierge:"Priority Concierge — €20",
+    br_concierge_note:"Let our local team handle this step for you, in person or by phone.",
+    br_task_residency:"Residency Registration (Адресна регистрация)",
+    br_task_residency_d:"Register your address with the local police district within the legal deadline after arrival.",
+    br_task_taxid:"Tax ID / EGN-equivalent (Булстат / ЛНЧ)",
+    br_task_taxid_d:"Obtain a personal number for foreigners — required for contracts, banking, and utility bills.",
+    br_task_bank:"Open a Bulgarian Bank Account",
+    br_task_bank_d:"Most landlords and employers require a local IBAN for rent and salary payments.",
+    br_task_car:"Car Registration &amp; Driving License",
+    br_task_car_d:"Register an imported vehicle or exchange your foreign driving license at KAT.",
+    br_task_sim:"Local SIM Card &amp; Phone Contract",
+    br_task_sim_d:"Get a Bulgarian number — needed to verify most apps, banks and delivery services.",
+    br_task_health:"Health Insurance Registration (NHIF)",
+    br_task_health_d:"Register with the National Health Insurance Fund or arrange private cover.",
+    // SMS / Language hack generator
+    sms_title:"Language Hack — Landlord SMS Generator",
+    sms_sub:"Pick a situation, fill in the blanks, and get a polite, professional Bulgarian message ready to send.",
+    sms_situation_label:"Situation",
+    sms_situation_viewing:"Request a viewing",
+    sms_situation_heating:"Report broken heating",
+    sms_situation_complaint:"File a complaint",
+    sms_situation_deposit:"Ask about deposit return",
+    sms_situation_repair:"Request a repair",
+    sms_name_label:"Your name", sms_address_label:"Address / Apartment", sms_detail_label:"Extra detail (optional)",
+    sms_generate_btn:"Generate Message",
+    sms_copy_btn:"Copy to Clipboard",
+    sms_copied:"Copied!",
+    sms_result_label:"Ready-to-send message (Bulgarian)",
+    sms_result_label_en:"English translation",
+    // Living cost index
+    lci_title:"Living Cost Index",
+    lci_sub:"Crowdsourced average monthly prices by district — beyond just rent.",
+    lci_internet:"Internet (100Mbps+)", lci_gym:"Gym Membership", lci_groceries:"Groceries (1 person/mo)",
+    // Meetup feed
+    mf_title:"Expat Meetup Feed",
+    mf_sub:"Upcoming networking and social events for expats in Sofia.",
+    mf_attendees:"attending", mf_rsvp:"RSVP",
+    // dashboard additions
+    dash_tab_bureaucracy:"Bureaucracy Progress",
+    dash_tab_starterpack:"Starter Pack",
+    dash_bureaucracy_complete:"tasks completed",
+    dash_starterpack_active:"Starter Pack: Active",
+    dash_starterpack_inactive:"Starter Pack: Not purchased",
+    dash_starterpack_includes:"Includes 1x Contract Scan, Digital Checklist, SMS Templates, PDF Survival Guide.",
+    dash_starterpack_cta:"Get Starter Pack — €50",
+    // pricing: starter pack
+    tier_starter_name:"Premium Expat Starter Pack",
+    tier_starter_badge:"ONE-TIME",
+    tier_starter_period:"one-time",
+    tier_starter_desc:"Everything you need for your first month in Bulgaria, bundled.",
+    starter_f1:'<b class="text-white">1x Contract Scan</b> — full AI clause analysis',
+    starter_f2:'<b class="text-white">Digital Move-in Checklist</b> — unlimited photo vault entries',
+    starter_f3:'<b class="text-white">SMS Templates</b> — unlimited landlord message generator use',
+    starter_f4:'<b class="text-white">PDF Survival Guide</b> — bureaucracy, emergency numbers, neighborhood tips',
+    starter_cta:"Get Starter Pack — €50 one-time",
   },
   bg: {
     nav_search:"Търсене", nav_directory:"Директория", nav_pricing:"Цени", nav_report:"Сигнал",
@@ -1209,6 +1500,87 @@ const LANG = {
     hm_title:"Безопасност и начин на живот по квартали", hm_sub:"Оценки от общността за популярни квартали на София.",
     hm_disclaimer:"Оценките са илюстративни приблизителни оценки на общността, не официална статистика.",
     hm_safety:"Безопасност", hm_value:"Съотношение цена/качество", hm_nightlife:"Нощен живот",
+    // toolbox explainers (rebuild)
+    mi_explainer:"Обходи апартамента стая по стая. За всяка драскотина, петно, пукнатина или повредена част добави ред по-долу и снимай с телефона си. Този записан с дата протокол е твоето доказателство, ако наемодателят по-късно оспори състоянието на апартамента и опита да задържи депозита ти.",
+    uc_explainer:"Наемът рядко е цялата история. Отопление, ток и вода могат да добавят €60–150/месец в България, в зависимост от площта, квартала и сезона. Изчисли реалната месечна цена преди да подпишеш.",
+    hm_explainer:'Всеки квартал по-долу е оценен от 0 до 10 по три независими показателя. <b class="text-slate-200">Безопасност</b> отразява нивата на докладвана престъпност и колко комфортно е да се ходи пеша вечер. <b class="text-slate-200">Съотношение цена/качество</b> отразява колко апартамент и начин на живот получаваш на евро наем спрямо средното за града. <b class="text-slate-200">Нощен живот</b> отразява гъстотата на барове, ресторанти и вечерна активност — полезно, ако искаш тиха улица или обратното. Зелено е силно, жълто е средно, червено е слабо по съответния показател.',
+    hm_legend_safety_b:"Безопасност", hm_legend_value_b:"Съотношение цена/качество", hm_legend_nightlife_b:"Нощен живот",
+    hm_legend_strong:"Силно (8–10)", hm_legend_average:"Средно (6.5–8)", hm_legend_weak:"Слабо (под 6.5)",
+    hm_col_safety:"Безопасност", hm_col_valuelife:"Цена/качество · Нощен живот",
+    // nav
+    nav_expat:"За експати",
+    // SOS floating button + modal
+    sos_btn_label:"SOS",
+    sos_modal_title:"Контакти за спешни случаи и помощ",
+    sos_modal_sub:"Бърз достъп до посолства, 24-часови аптеки и таксита с англоговорящи шофьори в България.",
+    sos_general:"Обща спешна линия (в цяла ЕС)", sos_general_note:"Полиция, бърза помощ, пожарна — безплатно, 24/7, обикновено достъпно на английски.",
+    sos_embassies:"Местни посолства (София)",
+    sos_pharmacies:"24-часови аптеки",
+    sos_taxis:"Таксита с англоговорящи шофьори",
+    sos_close:"Затвори",
+    sos_disclaimer:"Номерата са примерни за демо цели — проверявай актуални данни за контакт преди да се разчита на тях в реална спешност.",
+    // Expat Hub page
+    eh_kicker:"Хъб за оцеляване на експати", eh_title:"Всичко необходимо да се установиш в България",
+    eh_sub:"Бюрокрация, език и местни познания — създадено за чужденци, преместващи се в София.",
+    // Bureaucracy roadmap
+    br_title:"Бюрократична пътна карта",
+    br_sub:"Следи документите, с които всеки експат трябва да се справи. Отмятай ги, докато ги завършваш.",
+    br_progress_label:"Твой прогрес",
+    br_concierge:"Приоритетен консиерж — €20",
+    br_concierge_note:"Остави нашия местен екип да се погрижи за тази стъпка вместо теб, лично или по телефона.",
+    br_task_residency:"Адресна регистрация",
+    br_task_residency_d:"Регистрирай адреса си в местното полицейско управление в законния срок след пристигане.",
+    br_task_taxid:"Данъчен номер (Булстат / ЛНЧ)",
+    br_task_taxid_d:"Получи личен номер за чужденци — необходим за договори, банкиране и сметки за комунални услуги.",
+    br_task_bank:"Откриване на българска банкова сметка",
+    br_task_bank_d:"Повечето наемодатели и работодатели изискват местен IBAN за наем и заплата.",
+    br_task_car:"Регистрация на автомобил и шофьорска книжка",
+    br_task_car_d:"Регистрирай внесено превозно средство или обмени чуждата си книжка в КАТ.",
+    br_task_sim:"Местна SIM карта и телефонен договор",
+    br_task_sim_d:"Вземи български номер — необходим за верификация на повечето приложения, банки и доставки.",
+    br_task_health:"Регистрация в НЗОК",
+    br_task_health_d:"Регистрирай се в Националната здравноосигурителна каса или уреди частна здравна осигуровка.",
+    // SMS / Language hack generator
+    sms_title:"Езиков хак — Генератор на SMS до наемодател",
+    sms_sub:"Избери ситуация, попълни празните места и получи учтиво, професионално съобщение на български, готово за изпращане.",
+    sms_situation_label:"Ситуация",
+    sms_situation_viewing:"Заявка за оглед",
+    sms_situation_heating:"Докладване на повредено отопление",
+    sms_situation_complaint:"Подаване на оплакване",
+    sms_situation_deposit:"Запитване за връщане на депозит",
+    sms_situation_repair:"Заявка за ремонт",
+    sms_name_label:"Твое име", sms_address_label:"Адрес / Апартамент", sms_detail_label:"Допълнителен детайл (по желание)",
+    sms_generate_btn:"Генерирай съобщение",
+    sms_copy_btn:"Копирай в клипборда",
+    sms_copied:"Копирано!",
+    sms_result_label:"Готово за изпращане съобщение (на български)",
+    sms_result_label_en:"Превод на английски",
+    // Living cost index
+    lci_title:"Индекс на разходите за живот",
+    lci_sub:"Средни месечни цени от общността по квартали — отвъд просто наема.",
+    lci_internet:"Интернет (100Mbps+)", lci_gym:"Фитнес абонамент", lci_groceries:"Хранителни стоки (1 човек/мес)",
+    // Meetup feed
+    mf_title:"Емисия със срещи за експати",
+    mf_sub:"Предстоящи мрежови и социални събития за експати в София.",
+    mf_attendees:"участници", mf_rsvp:"Запиши се",
+    // dashboard additions
+    dash_tab_bureaucracy:"Бюрократичен прогрес",
+    dash_tab_starterpack:"Стартов пакет",
+    dash_bureaucracy_complete:"завършени задачи",
+    dash_starterpack_active:"Стартов пакет: Активен",
+    dash_starterpack_inactive:"Стартов пакет: Не е закупен",
+    dash_starterpack_includes:"Включва 1x анализ на договор, дигитален чеклист, SMS шаблони, PDF ръководство за оцеляване.",
+    dash_starterpack_cta:"Вземи стартов пакет — €50",
+    // pricing: starter pack
+    tier_starter_name:"Премиум стартов пакет за експати",
+    tier_starter_badge:"ЕДНОКРАТНО",
+    tier_starter_period:"еднократно",
+    tier_starter_desc:"Всичко необходимо за първия ти месец в България, събрано в едно.",
+    starter_f1:'<b class="text-white">1x Анализ на договор</b> — пълен AI анализ на клаузи',
+    starter_f2:'<b class="text-white">Дигитален Move-in чеклист</b> — неограничени записи в хранилището за снимки',
+    starter_f3:'<b class="text-white">SMS шаблони</b> — неограничена употреба на генератора за съобщения',
+    starter_f4:'<b class="text-white">PDF ръководство за оцеляване</b> — бюрокрация, спешни номера, съвети за квартали',
+    starter_cta:"Вземи стартов пакет — €50 еднократно",
   }
 };
 
@@ -1238,6 +1610,10 @@ function setLang(lang){
   renderChecklistRows();
   renderDashboard();
   updateContractScanButton();
+  renderBureaucracyTasks();
+  renderLivingCostIndex();
+  renderMeetupFeed();
+  renderSosLists();
 }
 
 /* ============================================================
@@ -1527,19 +1903,21 @@ function renderHeatmap(){
   wrap.innerHTML = HEATMAP_DATA.map(d=>{
     const name = CURRENT_LANG==='bg' ? d.name_bg : d.name;
     return `
-    <div class="heat-row">
-      <span class="text-sm font-medium text-slate-200 truncate">${name}</span>
+    <div class="heat-row" style="grid-template-columns:1fr auto auto">
+      <span class="text-sm font-medium text-slate-200 truncate" title="${name}">${name}</span>
       <div class="flex items-center gap-1.5" title="${t('hm_safety')}">
         <div class="heat-bar-track"><div class="heat-bar-fill" style="width:${d.safety*10}%;background:${heatColor(d.safety)}"></div></div>
         <span class="heat-score" style="color:${heatColor(d.safety)}">${d.safety}</span>
       </div>
-      <div class="flex items-center gap-1.5" title="${t('hm_value')}">
-        <div class="heat-bar-track"><div class="heat-bar-fill" style="width:${d.value*10}%;background:${heatColor(d.value)}"></div></div>
-        <span class="heat-score" style="color:${heatColor(d.value)}">${d.value}</span>
-      </div>
-      <div class="flex items-center gap-1.5" title="${t('hm_nightlife')}">
-        <div class="heat-bar-track"><div class="heat-bar-fill" style="width:${d.nightlife*10}%;background:${heatColor(d.nightlife)}"></div></div>
-        <span class="heat-score" style="color:${heatColor(d.nightlife)}">${d.nightlife}</span>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1.5" title="${t('hm_value')}">
+          <div class="heat-bar-track" style="width:60px"><div class="heat-bar-fill" style="width:${d.value*10}%;background:${heatColor(d.value)}"></div></div>
+          <span class="heat-score" style="width:26px;color:${heatColor(d.value)}">${d.value}</span>
+        </div>
+        <div class="flex items-center gap-1.5" title="${t('hm_nightlife')}">
+          <div class="heat-bar-track" style="width:60px"><div class="heat-bar-fill" style="width:${d.nightlife*10}%;background:${heatColor(d.nightlife)}"></div></div>
+          <span class="heat-score" style="width:26px;color:${heatColor(d.nightlife)}">${d.nightlife}</span>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -1554,6 +1932,10 @@ function switchDashTab(tabName){
   document.querySelectorAll('.dash-tab').forEach(b=>b.classList.toggle('active', b.dataset.dashtab===tabName));
   document.getElementById('dash-scans-panel').classList.toggle('hidden', tabName!=='scans');
   document.getElementById('dash-protocols-panel').classList.toggle('hidden', tabName!=='protocols');
+  document.getElementById('dash-bureaucracy-panel').classList.toggle('hidden', tabName!=='bureaucracy');
+  document.getElementById('dash-starterpack-panel').classList.toggle('hidden', tabName!=='starterpack');
+  if(tabName==='bureaucracy') updateDashboardBureaucracy();
+  if(tabName==='starterpack') updateDashboardStarterPack();
 }
 
 function deleteScan(scanId){
@@ -1617,6 +1999,9 @@ function renderDashboard(){
       </div>
     `).join('');
   }
+
+  updateDashboardBureaucracy();
+  updateDashboardStarterPack();
 }
 
 function scrollToDashboard(){
@@ -2053,7 +2438,11 @@ function emailLogin(e){
   const name = document.getElementById("auth-name").value.trim() || email.split("@")[0];
   if(!email) return;
   const existing = (CURRENT_USER && CURRENT_USER.favorites) || [];
-  saveUser({ name, email, plan:"free", provider:"email", favorites:existing });
+  const existingScans = (CURRENT_USER && CURRENT_USER.scans) || [];
+  const existingProtocols = (CURRENT_USER && CURRENT_USER.protocols) || [];
+  const existingBureaucracy = (CURRENT_USER && CURRENT_USER.bureaucracy) || {};
+  const existingStarterPack = (CURRENT_USER && CURRENT_USER.starterPack) || false;
+  saveUser({ name, email, plan:"free", provider:"email", favorites:existing, scans:existingScans, protocols:existingProtocols, bureaucracy:existingBureaucracy, starterPack:existingStarterPack });
   closeModal("auth-modal");
   toast(t('toast_logged_in'), `${CURRENT_LANG==='en'?'Hi':'Здравей'} ${name}!`);
 }
@@ -2519,10 +2908,272 @@ const counterIO = new IntersectionObserver((entries)=>{
 },{ threshold:.4 });
 document.querySelectorAll("[data-counter]").forEach(el=>counterIO.observe(el));
 
+/* ============================================================
+   BUREAUCRACY ROADMAP
+============================================================ */
+const BUREAUCRACY_TASKS = [
+  { id:"residency", titleKey:"br_task_residency", descKey:"br_task_residency_d" },
+  { id:"taxid",     titleKey:"br_task_taxid",     descKey:"br_task_taxid_d" },
+  { id:"bank",      titleKey:"br_task_bank",      descKey:"br_task_bank_d" },
+  { id:"car",       titleKey:"br_task_car",       descKey:"br_task_car_d" },
+  { id:"sim",       titleKey:"br_task_sim",       descKey:"br_task_sim_d" },
+  { id:"health",    titleKey:"br_task_health",    descKey:"br_task_health_d" }
+];
+
+function getBureaucracyState(){
+  if(CURRENT_USER){
+    if(!CURRENT_USER.bureaucracy) CURRENT_USER.bureaucracy = {};
+    return CURRENT_USER.bureaucracy;
+  }
+  try{
+    const raw = localStorage.getItem('rentshield_bureaucracy_guest');
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function setBureaucracyState(state){
+  if(CURRENT_USER){
+    CURRENT_USER.bureaucracy = state;
+    saveUser(CURRENT_USER);
+  } else {
+    localStorage.setItem('rentshield_bureaucracy_guest', JSON.stringify(state));
+  }
+}
+
+function toggleBureaucracyTask(taskId){
+  const state = getBureaucracyState();
+  state[taskId] = !state[taskId];
+  setBureaucracyState(state);
+  renderBureaucracyTasks();
+  updateDashboardBureaucracy();
+}
+
+function renderBureaucracyTasks(){
+  const wrap = document.getElementById('br-task-list');
+  if(!wrap) return;
+  const state = getBureaucracyState();
+  const completed = BUREAUCRACY_TASKS.filter(task=>state[task.id]).length;
+  const total = BUREAUCRACY_TASKS.length;
+  const pct = Math.round((completed/total)*100);
+
+  const progressText = document.getElementById('br-progress-text');
+  const progressBar = document.getElementById('br-progress-bar');
+  if(progressText) progressText.textContent = `${completed} / ${total}`;
+  if(progressBar) progressBar.style.width = pct + '%';
+
+  wrap.innerHTML = BUREAUCRACY_TASKS.map(task=>{
+    const done = !!state[task.id];
+    return `
+    <div class="checklist-row" style="align-items:center;${done?'opacity:.6':''}">
+      <div onclick="toggleBureaucracyTask('${task.id}')" style="cursor:pointer;flex-shrink:0" class="w-6 h-6 rounded-md flex items-center justify-center" >
+        ${done
+          ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5" fill="rgba(52,211,153,.18)"/><polyline points="8 12 11 15 16 9"/></svg>`
+          : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/></svg>`}
+      </div>
+      <div class="flex-1">
+        <div class="text-sm font-semibold ${done?'text-slate-400 line-through':'text-slate-200'}">${t(task.titleKey)}</div>
+        <div class="text-xs text-slate-500 mt-0.5">${t(task.descKey)}</div>
+      </div>
+      <button onclick="stripeCheckoutPlaceholder('concierge_${task.id}')" class="btn-ghost px-3 py-1.5 rounded-lg text-[11px] font-semibold text-amber-300 flex-shrink-0 whitespace-nowrap" style="border-color:rgba(251,191,36,.3)" data-i18n="br_concierge" title="${t('br_concierge_note')}">Priority Concierge — €20</button>
+    </div>`;
+  }).join('');
+}
+
+function updateDashboardBureaucracy(){
+  const textEl = document.getElementById('dash-br-progress-text');
+  const barEl = document.getElementById('dash-br-progress-bar');
+  const countEl = document.getElementById('dash-br-complete-count');
+  if(!textEl) return;
+  const state = getBureaucracyState();
+  const completed = BUREAUCRACY_TASKS.filter(task=>state[task.id]).length;
+  const total = BUREAUCRACY_TASKS.length;
+  textEl.textContent = `${completed} / ${total}`;
+  barEl.style.width = Math.round((completed/total)*100) + '%';
+  countEl.textContent = completed;
+}
+
+/* ============================================================
+   STARTER PACK STATUS (dashboard)
+============================================================ */
+function updateDashboardStarterPack(){
+  const statusEl = document.getElementById('dash-sp-status');
+  const iconWrap = document.getElementById('dash-sp-icon-wrap');
+  const icon = document.getElementById('dash-sp-icon');
+  const cta = document.getElementById('dash-sp-cta');
+  if(!statusEl) return;
+  const active = !!(CURRENT_USER && CURRENT_USER.starterPack);
+  statusEl.textContent = active ? t('dash_starterpack_active') : t('dash_starterpack_inactive');
+  if(active){
+    iconWrap.style.background = 'rgba(52,211,153,.15)';
+    icon.outerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" id="dash-sp-icon"><polyline points="20 6 9 17 4 12"/></svg>`;
+    cta.style.display = 'none';
+  } else {
+    iconWrap.style.background = 'rgba(148,163,184,.12)';
+    if(document.getElementById('dash-sp-icon')) document.getElementById('dash-sp-icon').outerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" id="dash-sp-icon"><circle cx="12" cy="12" r="10"/></svg>`;
+    cta.style.display = 'inline-block';
+  }
+}
+
+/* ============================================================
+   SMS / LANGUAGE HACK GENERATOR
+============================================================ */
+const SMS_TEMPLATES = {
+  viewing: {
+    bg: (name, addr, detail) => `Добър ден, казвам се ${name||'[Име]'}. Пиша Ви относно обявата за апартамента${addr?` на адрес ${addr}`:''}. Бихте ли могли да уговорим оглед${detail?`, например ${detail}`:''}? Благодаря Ви предварително и оставам на разположение.`,
+    en: (name, addr, detail) => `Hello, my name is ${name||'[Name]'}. I'm writing about the apartment listing${addr?` at ${addr}`:''}. Could we arrange a viewing${detail?`, for example ${detail}`:''}? Thank you in advance, I'm available at your convenience.`
+  },
+  heating: {
+    bg: (name, addr, detail) => `Добър ден, казвам се ${name||'[Име]'}, наемател${addr?` на адрес ${addr}`:''}. Искам да Ви уведомя, че отоплението не работи изправно${detail?` (${detail})`:''}. Бихте ли могли да изпратите техник възможно най-скоро? Благодаря за съдействието.`,
+    en: (name, addr, detail) => `Hello, my name is ${name||'[Name]'}, tenant${addr?` at ${addr}`:''}. I wanted to let you know the heating isn't working properly${detail?` (${detail})`:''}. Could you please send a technician as soon as possible? Thank you for your help.`
+  },
+  complaint: {
+    bg: (name, addr, detail) => `Добър ден, казвам се ${name||'[Име]'}, наемател${addr?` на адрес ${addr}`:''}. Бих искал/а учтиво да подам оплакване относно следния въпрос: ${detail||'[описание на проблема]'}. Бих оценил/а, ако можем да го обсъдим и да намерим решение. Благодаря Ви за разбирането.`,
+    en: (name, addr, detail) => `Hello, my name is ${name||'[Name]'}, tenant${addr?` at ${addr}`:''}. I would like to politely raise a complaint regarding the following issue: ${detail||'[describe the issue]'}. I would appreciate the chance to discuss it and find a resolution. Thank you for your understanding.`
+  },
+  deposit: {
+    bg: (name, addr, detail) => `Добър ден, казвам се ${name||'[Име]'}, бивш наемател${addr?` на адрес ${addr}`:''}. Пиша Ви във връзка с връщането на депозита след напускане на имота${detail?` (${detail})`:''}. Бихте ли могли да ми кажете кога мога да очаквам сумата да бъде преведена? Благодаря Ви предварително.`,
+    en: (name, addr, detail) => `Hello, my name is ${name||'[Name]'}, former tenant${addr?` at ${addr}`:''}. I'm writing regarding the return of my deposit after vacating the property${detail?` (${detail})`:''}. Could you let me know when I can expect the amount to be transferred? Thank you in advance.`
+  },
+  repair: {
+    bg: (name, addr, detail) => `Добър ден, казвам се ${name||'[Име]'}, наемател${addr?` на адрес ${addr}`:''}. Искам да докладвам необходимост от ремонт: ${detail||'[описание на повредата]'}. Бихте ли могли да организирате ремонт в удобно за Вас време? Благодаря Ви.`,
+    en: (name, addr, detail) => `Hello, my name is ${name||'[Name]'}, tenant${addr?` at ${addr}`:''}. I'd like to report something that needs repair: ${detail||'[describe the issue]'}. Could you arrange a repair at a convenient time? Thank you.`
+  }
+};
+let LAST_SMS_BG = '';
+
+function generateSms(){
+  const situation = document.getElementById('sms-situation').value;
+  const name = document.getElementById('sms-name').value.trim();
+  const addr = document.getElementById('sms-address').value.trim();
+  const detail = document.getElementById('sms-detail').value.trim();
+  const tpl = SMS_TEMPLATES[situation];
+  if(!tpl) return;
+  const bgText = tpl.bg(name, addr, detail);
+  const enText = tpl.en(name, addr, detail);
+  LAST_SMS_BG = bgText;
+  document.getElementById('sms-output-bg').textContent = bgText;
+  document.getElementById('sms-output-en').textContent = enText;
+  document.getElementById('sms-result').classList.remove('hidden');
+  document.getElementById('sms-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function copySms(){
+  if(!LAST_SMS_BG) return;
+  const btn = document.getElementById('sms-copy-btn');
+  const fallback = ()=>{
+    const ta = document.createElement('textarea');
+    ta.value = LAST_SMS_BG;
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(LAST_SMS_BG).catch(fallback);
+  } else { fallback(); }
+  const original = btn.textContent;
+  btn.textContent = t('sms_copied');
+  setTimeout(()=>{ btn.textContent = original; }, 1800);
+}
+
+/* ============================================================
+   LIVING COST INDEX
+============================================================ */
+const LIVING_COST_DATA = [
+  { name:"Lozenets", name_bg:"Лозенец", internet:22, gym:45, groceries:230 },
+  { name:"Mladost", name_bg:"Младост", internet:20, gym:35, groceries:210 },
+  { name:"Center", name_bg:"Център", internet:24, gym:55, groceries:250 },
+  { name:"Studentski grad", name_bg:"Студентски град", internet:19, gym:28, groceries:190 },
+  { name:"Druzhba", name_bg:"Дружба", internet:18, gym:30, groceries:195 }
+];
+function renderLivingCostIndex(){
+  const wrap = document.getElementById('lci-rows');
+  if(!wrap) return;
+  wrap.innerHTML = `
+    <div class="grid grid-cols-4 gap-2 mb-2 px-1">
+      <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500"></span>
+      <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500 text-center" data-i18n="lci_internet">Internet</span>
+      <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500 text-center" data-i18n="lci_gym">Gym</span>
+      <span class="text-[10px] font-bold uppercase tracking-wide text-slate-500 text-center" data-i18n="lci_groceries">Groceries</span>
+    </div>
+  ` + LIVING_COST_DATA.map(d=>{
+    const name = CURRENT_LANG==='bg' ? d.name_bg : d.name;
+    return `<div class="grid grid-cols-4 gap-2 items-center py-2 px-1 border-b" style="border-color:var(--line)">
+      <span class="text-sm text-slate-200 truncate" title="${name}">${name}</span>
+      <span class="text-sm font-mono2 text-center text-slate-300">€${d.internet}</span>
+      <span class="text-sm font-mono2 text-center text-slate-300">€${d.gym}</span>
+      <span class="text-sm font-mono2 text-center text-slate-300">€${d.groceries}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   EXPAT MEETUP FEED
+============================================================ */
+const MEETUP_DATA = [
+  { title:"Sofia Expat Networking Night", title_bg:"Мрежова вечер за експати в София", date:"2026-06-20", venue:"Hambara, Sofia Center", attendees:64 },
+  { title:"International Women in Tech Sofia", title_bg:"Жени в технологиите София (международна)", date:"2026-06-24", venue:"Capital Fort, Mladost", attendees:38 },
+  { title:"Newcomers Coffee Meetup", title_bg:"Кафе среща за новопристигнали", date:"2026-06-28", venue:"One Coffee, Lozenets", attendees:21 },
+  { title:"Sofia Language Exchange (EN/BG)", title_bg:"Езиков обмен в София (EN/BG)", date:"2026-07-02", venue:"Phoenix Pub, City Center", attendees:47 }
+];
+function renderMeetupFeed(){
+  const wrap = document.getElementById('meetup-list');
+  if(!wrap) return;
+  wrap.innerHTML = MEETUP_DATA.map(m=>{
+    const title = CURRENT_LANG==='bg' ? m.title_bg : m.title;
+    return `
+    <div class="rounded-xl p-4" style="background:rgba(255,255,255,.02);border:1px solid var(--line)">
+      <div class="text-[11px] text-emerald-400 font-mono2 mb-1">${m.date}</div>
+      <div class="text-sm font-semibold text-slate-200 mb-1 leading-snug">${title}</div>
+      <div class="text-xs text-slate-500 mb-3">${m.venue}</div>
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] text-slate-500">${m.attendees} ${t('mf_attendees')}</span>
+        <button onclick="toast(t('mf_rsvp'), '${title.replace(/'/g,"\\'")}')" class="btn-ghost px-3 py-1.5 rounded-lg text-[11px] font-semibold text-emerald-300">${t('mf_rsvp')}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   EMERGENCY SOS DATA
+============================================================ */
+const SOS_EMBASSIES = [
+  { name:"United States", name_bg:"САЩ", phone:"+359 2 937 5100" },
+  { name:"United Kingdom", name_bg:"Обединено кралство", phone:"+359 2 933 9222" },
+  { name:"Germany", name_bg:"Германия", phone:"+359 2 918 38 100" },
+  { name:"France", name_bg:"Франция", phone:"+359 2 965 1100" }
+];
+const SOS_PHARMACIES = [
+  { name:"Apteka Sofia 24h — Vitosha Blvd", name_bg:"Аптека София 24ч — бул. Витоша", phone:"+359 2 951 2345" },
+  { name:"Subra Pharmacy — Mladost 1", name_bg:"Аптека Субра — Младост 1", phone:"+359 2 974 1122" }
+];
+const SOS_TAXIS = [
+  { name:"Yellow Taxi Sofia (EN support)", name_bg:"Жълто такси София (англ. поддръжка)", phone:"+359 2 91 119" },
+  { name:"OK Supertrans (EN support)", name_bg:"OK Супертранс (англ. поддръжка)", phone:"+359 2 9 731 731" }
+];
+function sosRowHtml(item){
+  const name = CURRENT_LANG==='bg' ? item.name_bg : item.name;
+  return `<div class="flex items-center justify-between rounded-lg px-3 py-2" style="background:rgba(255,255,255,.02);border:1px solid var(--line)">
+    <span class="text-sm text-slate-200">${name}</span>
+    <a href="tel:${item.phone.replace(/\s/g,'')}" class="text-sm font-mono2 text-emerald-300 hover:underline flex-shrink-0 ml-3">${item.phone}</a>
+  </div>`;
+}
+function renderSosLists(){
+  const e = document.getElementById('sos-embassy-list');
+  const p = document.getElementById('sos-pharmacy-list');
+  const tx = document.getElementById('sos-taxi-list');
+  if(e) e.innerHTML = SOS_EMBASSIES.map(sosRowHtml).join('');
+  if(p) p.innerHTML = SOS_PHARMACIES.map(sosRowHtml).join('');
+  if(tx) tx.innerHTML = SOS_TAXIS.map(sosRowHtml).join('');
+}
+
 /* INIT */
 renderBrokers("all");
 loadUser();
 setLang('en'); // default
+renderBureaucracyTasks();
+renderLivingCostIndex();
+renderMeetupFeed();
+renderSosLists();
 </script>
 </body>
 </html>
